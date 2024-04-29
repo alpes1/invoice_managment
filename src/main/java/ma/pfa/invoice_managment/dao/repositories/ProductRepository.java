@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-    Page<Quotes> findProductByCategory(String CustomerName, Pageable pageable) ;
-    List<Quotes> findProductByName(Date date) ;
-    Page<Quotes> findBy(String keyword , Pageable pageable);
+    //Page<Product> findProductByCategory(String Category, Pageable pageable) ;
+
+    Page<Product> findProductByName(String keyword , Pageable pageable);
 }

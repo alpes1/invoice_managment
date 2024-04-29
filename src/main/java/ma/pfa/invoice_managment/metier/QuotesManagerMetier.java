@@ -22,7 +22,7 @@ public class QuotesManagerMetier implements QuotesManager{
 
     public List<Invoice> getAllQuotes()
     {
-return null ;
+        return null ;
     };
 
     public Quotes updateQuotes(int id )

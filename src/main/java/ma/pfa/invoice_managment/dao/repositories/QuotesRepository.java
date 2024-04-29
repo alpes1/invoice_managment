@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface QuotesRepository extends JpaRepository<Quotes,Integer> {
     Page<Quotes> findQuotesByCustomer(String CustomerName, Pageable pageable) ;
-    List<Quotes> findQuotesByQuotesDate(Date date) ;
-    Page<Quotes> findByDesignationContains(String keyword , Pageable pageable);
+   // List<Quotes> findQuotesByQuoteDate(Date date) ;
+    //Page<Quotes> findByDesignationContains(String keyword , Pageable pageable);
 }

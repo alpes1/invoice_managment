@@ -15,7 +15,8 @@ public class Quotes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id ;
     @Column(name = "Date_Devis")
-    Date Quote_Date ;
+    Date QuoteDate ;
+
 
     @OneToOne
     private Invoice invoice ;
