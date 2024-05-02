@@ -22,7 +22,7 @@ public class Customer {
 
     private String phoneNumber ;
 
-    private String Address ;
+    private String address ;
 
     @OneToMany(mappedBy = "customer")
     private Collection<Invoice> invoice ;

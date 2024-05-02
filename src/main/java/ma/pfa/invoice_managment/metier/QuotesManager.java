@@ -12,7 +12,7 @@ public interface QuotesManager {
 
     public Quotes addQuotes(Quotes quotes) ;
 
-    public List<Invoice> getAllQuotes();
+    public List<Quotes> getAllQuotes();
 
     public Quotes updateQuotes(int id ) ;
     public Boolean deleteQuotes(int id ) ;
@@ -23,7 +23,11 @@ public interface QuotesManager {
 
     public Page<Quotes> getQuotesByCustomer(int page , int taille , String name );
 
-    public Page<Quotes> searchQuotes(int page , int taille , String keyword) ;
+    public Page<Quotes> getQuotesByService(int page , int taille , String keyword);
+
+    public Page<Quotes> getQuotesByProduct(int page , int taille , String keyword);
+
+
 
 
 }

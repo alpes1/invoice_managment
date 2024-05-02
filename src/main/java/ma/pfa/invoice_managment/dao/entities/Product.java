@@ -10,16 +10,16 @@ import java.util.Collection;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id ;
+    private Integer id ;
 
     private String name ;
 
     @Column(name = "Categorie")
-    private String Category ;
+    private String category ;
 
-    private String Description ;
+    private String description ;
     @Column(name = "prix Unitaire")
-    private Double Price ;
+    private Double price ;
 
     @ManyToMany(mappedBy ="product" )
     private Collection<Quotes> quotes = new ArrayList<>() ;

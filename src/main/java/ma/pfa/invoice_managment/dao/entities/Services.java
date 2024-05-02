@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-public class Service {
+public class Services {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id ;
+    private Integer id ;
 
-    private String Description ;
+    private String description ;
 
-    private String Type ;
+    private String type ;
 
     @Column(name="Prix")
     private double price ;
 
-    @ManyToMany(mappedBy = "service")
+    @ManyToMany(mappedBy = "services")
     private Collection<Quotes> quotes = new ArrayList<>() ;
 }

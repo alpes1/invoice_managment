@@ -3,7 +3,6 @@ package ma.pfa.invoice_managment.dao.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -15,7 +14,7 @@ public class Quotes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id ;
     @Column(name = "Date_Devis")
-    Date QuoteDate ;
+    Date quoteDate ;
 
 
     @OneToOne
@@ -28,5 +27,5 @@ public class Quotes {
     private Collection<Product> product ;
 
     @ManyToMany
-    private Collection<Service> service ;
+    private Collection<Services> services;
 }

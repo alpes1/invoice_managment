@@ -14,4 +14,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     //Page<Product> findProductByCategory(String Category, Pageable pageable) ;
 
     Page<Product> findProductByName(String keyword , Pageable pageable);
+    Page<Product> findProductByCategory(String keyword , Pageable pageable) ;
+    Page<Product> findProductByDescription(String keyword , Pageable pageable) ;
+    Page<Product> findProductById(String keyword , Pageable pageable) ;
+
+
+
+
 }
