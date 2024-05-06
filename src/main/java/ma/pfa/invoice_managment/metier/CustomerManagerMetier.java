@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerManagerMetier implements CustomerManager{
 
@@ -24,6 +26,8 @@ public class CustomerManagerMetier implements CustomerManager{
     public Boolean deleteCustomer(Integer id )
     {return null ;};
 
+
+
     public Page<Customer> getAllCustomer(int page , int taille )
     {
         return customerRepository.findAll( PageRequest.of(page,taille));
@@ -37,4 +41,8 @@ public class CustomerManagerMetier implements CustomerManager{
     {
         return customerRepository.findCustomerByAddress(keyword,PageRequest.of(page,taille));
     };
+
+    public List<Customer> getAllCustomerList() {
+        return customerRepository.findAll() ;
+    }
 }

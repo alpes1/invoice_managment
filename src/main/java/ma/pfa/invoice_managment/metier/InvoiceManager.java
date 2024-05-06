@@ -1,5 +1,6 @@
 package ma.pfa.invoice_managment.metier;
 
+import ma.pfa.invoice_managment.dao.entities.Customer;
 import ma.pfa.invoice_managment.dao.entities.Invoice;
 import ma.pfa.invoice_managment.dao.repositories.InvoiceRepository;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,8 @@ public interface InvoiceManager {
     public Page<Invoice> getInvoiceByCustomer(int page , int taille , String name );
 
     public Page<Invoice> searchInvoice(int page , int taille , String keyword) ;
+
+
 
 
 }

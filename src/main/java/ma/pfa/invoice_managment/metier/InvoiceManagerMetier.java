@@ -1,5 +1,6 @@
 package ma.pfa.invoice_managment.metier;
 
+import ma.pfa.invoice_managment.dao.entities.Customer;
 import ma.pfa.invoice_managment.dao.entities.Invoice;
 import ma.pfa.invoice_managment.dao.repositories.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,7 @@ public class InvoiceManagerMetier implements InvoiceManager{
     public Page<Invoice> searchInvoice(int page, int taille, String keyword) {
         return invoiceRepository.findByDesignationContains(keyword ,  PageRequest.of(page,taille));
     }
+
 
 
 

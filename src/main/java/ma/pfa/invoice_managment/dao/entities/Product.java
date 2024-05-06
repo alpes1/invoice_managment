@@ -20,9 +20,9 @@ public class Product {
     private String description ;
     @Column(name = "prix Unitaire")
     private Double price ;
-
     @ManyToMany(mappedBy ="product" )
     private Collection<Quotes> quotes = new ArrayList<>() ;
+
 
 
 

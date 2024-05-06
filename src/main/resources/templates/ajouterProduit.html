@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.com"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="template" lang="en">
+      layout:decorate="template" >
 <head>
     <meta charset="utf-8"/>
     <title>Index page</title>
@@ -11,25 +11,58 @@
 <body>
 <div layout:fragment="content">
     <div class="container" align="center">
-        <form action="/ajouterOnce" method="post" >
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control w-50" id="title" name="title">
-                <span class="text-danger"  th:errors="${produit.title}"></span>
-            </div>
-            <div class="mb-3">
-                <label for="designation" class="form-label">Designation</label>
-                <textarea class="form-control w-50" id="designation" name="designation" maxlength="100"></textarea>
-                <span class="text-danger"  th:errors="${produit.designation}"></span>
-            </div>
-            <div class="mb-3">
-                <label for="prix" class="form-label">Price</label>
-                <input type="text" class="form-control w-50" id="prix" name="prix">
-                <span class="text-danger" th:errors="${produit.prix}"></span>
-            </div>
-            <button type="submit" class="btn btn-primary form-control w-50" value="Ajouter">Ajouter</button>
+        <form action="/ajouterOncee" method="post" >
+            div class="p-3 m-2">
+            <header class="card-header">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <ul class="navbar nav">
+                        <li><a class="btn-dark" th:href="@{indexpage}">Index</a> |</li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Manage
+                            </a>
+                            <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <li><a class="dropdown-item" th:href="@{ajouterproduit}">Add Product</a></li>
+                              <li><a class="dropdown-item" th:href="@{indexpage}">Search</a></li>
+                            </ul>-->
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <main class="card-body">
+                <section class="container" align="center">
+                    <form action="/ajouterOnce" method="post">
+                        <h2>Product Information</h2>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                            <span class="text-danger" th:errors="${Product.name}">Error: {error message}</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category</label>
+                            <input type="text" class="form-control" id="category" name="category">
+                            <span class="text-danger" th:errors="${Product.category}">Error: {error message}</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="description" name="description">
+                            <span class="text-danger" th:errors="${Product.description}">Error: {error message}</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="price" name="price">
+                            <span class="text-danger" th:errors="${Product.price}">Error: {error message}</span>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </form>
+                </section>
+            </main>
         </form>
     </div>
-</div>
+
+
 </body>
 </html>

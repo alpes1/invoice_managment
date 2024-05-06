@@ -12,7 +12,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
 <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
     <span class="sr-only">Open sidebar</span>
     <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -94,36 +93,36 @@
 
 <div class="p-4 sm:ml-64">
 
-        <div class="p-3 m-2">
-            <div class="card">
-                <div class="card-header">
+    <div class="p-3 m-2">
+        <div class="card">
+            <div class="card-header">
 
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                        <ul class="navbar nav">
-                            <li><a class="btn-dark" th:href="@{indexpage}">Index</a> |</li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Manage
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li><a class="dropdown-item" th:href="@{ajouterproduit}">Add Product</a></li>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <ul class="navbar nav">
+                        <li><a class="btn-dark" th:href="@{start}">Index</a> |</li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Manage
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" th:href="@{ajouterFacture}">Add Product</a></li>
 
-                                    <li><a class="dropdown-item" th:href="@{indexpage}">Search</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
+                                <li><a class="dropdown-item" th:href="@{indexpage}">Search</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
 
-                </div>
-                <div class="card-body">
-                    <section layout:fragment= "content"></section>
-                </div>
-                <div class="card-footer" align="center">&copy; copyright: xproce 2024<br/> X - Casablanca- Morocco</br>
-                    badr.hirchoua@gmail.com
-                </div>
+            </div>
+            <div class="card-body">
+                <section layout:fragment="content"></section>
+            </div>
+            <div class="card-footer" align="center">&copy; copyright: xproce 2024<br/> X - Casablanca- Morocco</br>
+                badr.hirchoua@gmail.com
             </div>
         </div>
+    </div>
 </div>
 
 </body>

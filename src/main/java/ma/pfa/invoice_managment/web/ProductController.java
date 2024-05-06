@@ -19,7 +19,7 @@ public class ProductController {
 
     @Autowired
     ProductManager productManager ;
-
+/*
     @GetMapping("/genererProduct")
     public String Start () {return "index";}
 
@@ -35,18 +35,24 @@ public class ProductController {
         model.addAttribute("page",page);
         model.addAttribute("taille",taille);
         return "index";
-    }
-    @PostMapping("/addProduct")
-    public String ajouteProduct(Model model , @Valid Product product, BindingResult bindingResult)
+    }*/
+
+    @PostMapping("/ajouterOncee")
+    public String ajouterProduit(Model model , @Valid Product product, BindingResult bindingResult)
     {
         if (bindingResult.hasErrors())
-            return "/addProduct";
+            return "/_layout";
 
         productManager.addProduct(product) ;
 
         return "redirect:index" ;
     }
-
+    @GetMapping("/ajouterProduit")
+    public String ajouterProduit(Model model)
+    {
+        model.addAttribute("produit", new Product());
+        return "_layout.html" ;
+    }
 
 
 }

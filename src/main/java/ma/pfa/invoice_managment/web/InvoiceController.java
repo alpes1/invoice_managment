@@ -2,7 +2,9 @@ package ma.pfa.invoice_managment.web;
 
 
 import jakarta.validation.Valid;
+import ma.pfa.invoice_managment.dao.entities.Customer;
 import ma.pfa.invoice_managment.dao.entities.Invoice;
+import ma.pfa.invoice_managment.metier.CustomerManager;
 import ma.pfa.invoice_managment.metier.InvoiceManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,17 +28,19 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 public class InvoiceController {
-@Autowired
+    @Autowired
     InvoiceManager invoiceManager ;
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
-    @GetMapping("")
-    public String Start(){return "genererFacture";}
+    @Autowired
+    CustomerManager customerManager ;
 
-    @GetMapping("index")
+    @GetMapping("")
+    public String Start(){return "redirect:/index";}
+
+    @GetMapping("/index")
     public String ListInvoice(Model model ,
                               @RequestParam(name = "page", defaultValue = "0") int page ,
-                              @RequestParam(name = "taille", defaultValue = "10") int taille ,
-                              @RequestParam(name="keyword",defaultValue = "") String keyword
+                              @RequestParam(name = "taille", defaultValue = "10") int taille
+
                               )
     {
         Page<Invoice> invoices = invoiceManager.getAllInvoice(page, taille) ;
@@ -47,19 +51,31 @@ public class InvoiceController {
         model.addAttribute("taille",taille);
         return "index";
     }
-    @PostMapping("ajouterOnce")
-    public String ajouterInvoice(Model model ,
+    @GetMapping("/ajouterFacture")
+    public String ajouterInvoiceGet(Model model)
+    {
+        List<Customer> customers = customerManager.getAllCustomerList() ;
+
+        model.addAttribute("ListCLients",customers);
+        model.addAttribute("Invoice",new Invoice());
+        return "ajouterFacture" ;
+    }
+    @PostMapping("/ajouterFacture")
+    public String ajouterInvoicePost(Model model ,
                                  @Valid Invoice invoice,
                                  BindingResult bindingResult)
     {
         if (bindingResult.hasErrors())
         {
-            return "ajouterFacture";
+            return "redirect:template.html";
         }
         invoiceManager.addInvoice(invoice) ;
         return "redirect:index";
     }
-@PostMapping("/ajouterFacturee")
+
+
+
+/*@PostMapping("/ajouterfacture.html")
     public String ajouterFactureAction(Model model ,
                                        @RequestParam(name = "id") int id ,
                                        @RequestParam(name = "InvoiceNumber") Integer InvoiceNumber,
@@ -81,6 +97,6 @@ public class InvoiceController {
    // Invoice invoice = new Invoice(id, InvoiceNumber, invoiceDate, Designation, qte, price, totalPrice, new Date(), new Date(), logo.toString(), null);
     //invoiceManager.addInvoice(invoice);
     return "redirect:Index";
-}
+}*/
     }
 

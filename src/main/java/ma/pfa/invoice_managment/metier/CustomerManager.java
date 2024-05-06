@@ -1,8 +1,11 @@
 package ma.pfa.invoice_managment.metier;
 
 import ma.pfa.invoice_managment.dao.entities.Customer;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public interface CustomerManager {
@@ -17,5 +20,7 @@ public interface CustomerManager {
     public Page<Customer> getCustomerByCustomerName(int page , int taille , String keyword) ;
 
     public Page<Customer> getCustomerByAdress(int page , int taille , String keyword) ;
+
+    public List<Customer> getAllCustomerList();
 
 }
