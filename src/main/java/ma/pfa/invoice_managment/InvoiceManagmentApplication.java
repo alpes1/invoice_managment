@@ -19,20 +19,20 @@ public class InvoiceManagmentApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(InvoiceManagmentApplication.class, args);
     }
-    @Autowired
-    InvoiceManager invoiceManager ;
+ /*   @Autowired
+    InvoiceManager invoiceManager ;*/
 
-    @Autowired
-    CustomerManager cs ;
+  /*  @Autowired
+    CustomerManager cs ;*/
     @Override
 
     public void run(String... args) throws Exception {
-        List<Invoice> invoices = invoiceManager.getAllInvoice();
+  /*      List<Invoice> invoices = invoiceManager.getAllInvoice();
         invoices.forEach(x -> System.out.println(x.getInvoiceNumber() ));
 
         List<Customer> css = cs.getAllCustomerList();
         css.forEach(x-> System.out.println(x.getCustomarEmail()));
-
+*/
 
 
 

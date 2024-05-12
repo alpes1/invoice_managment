@@ -7,12 +7,12 @@ import org.hibernate.cache.spi.support.CollectionReadOnlyAccess;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Client")
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
+
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

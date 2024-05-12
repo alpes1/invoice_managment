@@ -7,8 +7,9 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity
-@Table(name = "Devis")
+
 @Data
+
 public class Quotes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -37,22 +37,21 @@ public class ProductController {
         return "index";
     }*/
 
-    @PostMapping("/ajouterOncee")
-    public String ajouterProduit(Model model , @Valid Product product, BindingResult bindingResult)
+
+    @GetMapping("/ajouterProduit")
+    public String ajouterProduitGet(Model model)
+    {
+        model.addAttribute("product", new Product());
+        return "ajouterProduit" ;
+    }
+
+    @PostMapping("/ajouterProduit")
+    public String ajouterProduitPost(Model model , @Valid Product product, BindingResult bindingResult)
     {
         if (bindingResult.hasErrors())
-            return "/_layout";
-
+            return "redirect:error.html";
         productManager.addProduct(product) ;
-
-        return "redirect:index" ;
+        return "Index" ;
     }
-    @GetMapping("/ajouterProduit")
-    public String ajouterProduit(Model model)
-    {
-        model.addAttribute("produit", new Product());
-        return "_layout.html" ;
-    }
-
 
 }

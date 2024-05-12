@@ -34,11 +34,18 @@ public class ServicesController {
         model.addAttribute("taille",taille);
         return "index";
     }
-    @PostMapping("/addService")
+    @GetMapping("/ajouterService")
+    public String ajouterServiceGet(Model model)
+    {
+        model.addAttribute("service" , new Services() ) ;
+
+         return "ajouterService";
+    }
+    @PostMapping("/ajouterService")
     public String ajouteService(Model model , @Valid Services service, BindingResult bindingResult)
     {
         if (bindingResult.hasErrors())
-            return "/addProduct";
+            return "/ajouterService";
 
         servicesManager.addService(service) ;
 

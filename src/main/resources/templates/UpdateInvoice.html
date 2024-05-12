@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card-body">
+        <div class="container" align="center">
+            <form action="/ajouter" method="post">
+                <input class="form-control" type="hidden" name="id" th:value="${InvoiceToBeUpdated.getId()}">
+                <div class="mb-3">
+                    <label for="invoiceNumber" class="form-label">Numéro de facture</label>
+                    <input type="text" class="form-control w-50" id="invoiceNumber" name="invoiceNumber"
+                           th:value="${InvoiceToBeUpdated.getInvoiceNumber()}">
+
+                </div>
+                <div class="mb-3">
+
+                    <label for="invoiceDate" class="form-label">Date de facturation</label>
+                    <input type="date" class="form-control w-50" id="invoiceDate" name="invoiceDate" th:value="${InvoiceToBeUpdated.getInvoiceDate()}">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label for="Designation" class="form-label">Désignation</label>
+                    <input type="text" class="form-control w-50" id="Designation" name="Designation" th:value="${InvoiceToBeUpdated.Designation}">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label for="qte" class="form-label">Quantité</label>
+                    <input type="text" class="form-control w-50" id="qte" name="qte" th:value="${InvoiceToBeUpdated.qte}">
+
+                </div>
+                <div class="mb-3">
+
+                    <label for="price" class="form-label">Prix</label>
+                    <input type="text" class="form-control w-50" id="price" name="price" th:value="${InvoiceToBeUpdated.price}">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label for="totalPrice" class="form-label">Prix total</label>
+                    <input type="text" class="form-control w-50" id="totalPrice" name="totalPrice"th:value="${InvoiceToBeUpdated.totalPrice}">
+
+                </div>
+
+                <!-- Champ Customer -->
+                <div class="mb-3">
+
+                    <label for="customer" class="form-label">Client</label>
+                    <select class="form-select w-50" id="customer" name="customer">
+
+                        <option th:each="client : ${ListClients}" th:value="${InvoiceToBeUpdated.getCustomer()}"
+                                th:text="${client.customerName}"></option>
+                    </select>
+
+                </div>
+
+                <!-- Champ Quotes -->
+                <div class="mb-3">
+                    <label for="quotes" class="form-label">Devis</label>
+                    <select class="form-select w-50" id="quotes" th:each="quotes : ${ListQuotes}" name="quotes">
+
+                        <option th:value="${InvoiceToBeUpdated.getQuotes()}"
+                                th:text="${quotes.getId()}">
+                        ></option>
+                    </select>
+
+                </div>
+
+
+                <button type="submit" class="btn btn-primary form-control w-50" value="Modifier">Modifier</button>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>
+</div>
+
+
+</body>
+</html>

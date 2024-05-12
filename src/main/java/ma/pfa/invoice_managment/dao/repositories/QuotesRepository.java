@@ -16,4 +16,5 @@ public interface QuotesRepository extends JpaRepository<Quotes,Integer> {
     List<Quotes> findQuotesByQuoteDate(Date date) ;
     Page<Quotes> findQuotesByProduct(String keyword , Pageable pageable);
     Page<Quotes> findQuotesByServices(String keyword , Pageable pageable);
+    List<Quotes> findAll();
 }

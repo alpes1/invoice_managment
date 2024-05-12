@@ -27,6 +27,8 @@ public interface QuotesManager {
 
     public Page<Quotes> getQuotesByProduct(int page , int taille , String keyword);
 
+    public List<Quotes> getAllQuotesList() ;
+
 
 
 

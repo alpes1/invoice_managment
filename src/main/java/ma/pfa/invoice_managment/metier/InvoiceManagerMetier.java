@@ -34,8 +34,8 @@ public class InvoiceManagerMetier implements InvoiceManager{
     }
 
     @Override
-    public Invoice updateInvoice(int id) {
-        return null;
+    public Invoice updateInvoice(Invoice invoice) {
+        return invoiceRepository.save(invoice);
     }
 
     @Override
@@ -63,7 +63,25 @@ public class InvoiceManagerMetier implements InvoiceManager{
         return invoiceRepository.findByDesignationContains(keyword ,  PageRequest.of(page,taille));
     }
 
+  @Override
+  public Invoice getInvoiceById(Integer id)
+  {
+      return invoiceRepository.findInvoicesById(id);
+  }
 
+  @Override
+    public boolean deleteInvoice(Integer id )
+  {
+      try {
+            invoiceRepository.deleteById(id);
 
+            return  true ;
+      }
+
+      catch (Exception ex)
+      {
+          return false ;
+      }
+  }
 
 }

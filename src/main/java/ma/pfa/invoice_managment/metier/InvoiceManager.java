@@ -16,7 +16,7 @@ public interface InvoiceManager {
 
     public List<Invoice> getAllInvoice();
 
-    public Invoice updateInvoice(int id ) ;
+    public Invoice updateInvoice(Invoice invoice) ;
     public Boolean deleteInvoice(int id ) ;
 
     //pagination
@@ -26,6 +26,14 @@ public interface InvoiceManager {
     public Page<Invoice> getInvoiceByCustomer(int page , int taille , String name );
 
     public Page<Invoice> searchInvoice(int page , int taille , String keyword) ;
+
+    public Invoice getInvoiceById(Integer id) ;
+
+    public boolean deleteInvoice(Integer id );
+
+
+
+
 
 
 

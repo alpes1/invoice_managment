@@ -52,9 +52,9 @@
                         <!-- Champ Customer -->
                         <div class="mb-3">
                             <label for="customer" class="form-label">Client</label>
-                            <select class="form-select w-50" id="customer" th:each="client : ${ListCLients}" name="customer">
+                            <select class="form-select w-50" id="customer"  name="customer">
 
-                                <option th:value="${client.id}" th:text="${client.customerName}"></option>
+                                <option th:each="client : ${ListCLients}" th:value="${client.id}" th:text="${client.customerName}"></option>
                             </select>
                             <span class="text-danger" th:errors="${Invoice.customer}"></span>
                         </div>
@@ -62,17 +62,14 @@
                         <!-- Champ Quotes -->
                         <div class="mb-3">
                             <label for="quotes" class="form-label">Devis</label>
-                            <input type="text" class="form-control w-50" id="quotes" name="quotes">
+                            <select class="form-select w-50" id="quotes" th:each="quotes : ${ListQuotes}" name="quotes">
+
+                                <option th:value="${quotes.id}" th:text="${quotes.id}" ></option>
+                            </select>
                             <span class="text-danger" th:errors="${Invoice.quotes}"></span>
                         </div>
 
-                        <!-- Ajoutez d'autres champs comme nécessaire -->
 
-                        <!--<div class="form-group">
-                            <label for="logo">Ajouter votre logo :</label>
-                            <input type="file" name="logo" accept="image/*" class="form-control-file" id="logo" >
-                            <span class="text-danger" th:errors="${Invoice.logo}"></span>
-                        </div>-->
                         <button type="submit" class="btn btn-primary form-control w-50" value="Ajouter">Ajouter</button>
                     </form>
                 </div>

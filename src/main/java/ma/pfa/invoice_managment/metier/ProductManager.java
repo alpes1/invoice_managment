@@ -26,4 +26,5 @@ public interface ProductManager {
 
  public Page<Product> getProductByCategorie(int page , int taille , String keyword) ;
  public Page<Product> getProductByDescription(int page , int taille , String keyword) ;
+
 }

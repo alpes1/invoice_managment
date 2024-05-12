@@ -59,6 +59,11 @@ public class QuotesManagerMetier implements QuotesManager{
         return quotesRepository.findQuotesByServices(keyword ,PageRequest.of(page,taille)) ;
     };
 
+    public List<Quotes> getAllQuotesList()
+    {
+        return quotesRepository.findAll();
+    }
+
 
 
 }

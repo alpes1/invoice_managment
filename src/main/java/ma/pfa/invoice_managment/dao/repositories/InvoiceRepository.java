@@ -14,7 +14,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
     List<Invoice> findInvoicesByInvoiceDate(Date date) ;
     Page<Invoice> findByDesignationContains(String keyword , Pageable pageable);
 
-
+    Invoice findInvoicesById(Integer id) ;
 
 
 }
