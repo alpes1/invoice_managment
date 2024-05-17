@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html
         xmlns:th="http://www.thymeleaf.org"
@@ -28,11 +29,7 @@
                             <input type="date" class="form-control w-50" id="invoiceDate" name="invoiceDate">
                             <span class="text-danger"  th:errors="${Invoice.invoiceDate}"></span>
                         </div>
-                        <div class="mb-3">
-                            <label for="Designation" class="form-label">Désignation</label>
-                            <input type="text" class="form-control w-50" id="Designation" name="Designation">
-                            <span class="text-danger" th:errors="${Invoice.Designation}"></span>
-                        </div>
+
                         <div class="mb-3">
                             <label for="qte" class="form-label">Quantité</label>
                             <input type="text" class="form-control w-50" id="qte" name="qte">
@@ -49,7 +46,7 @@
                             <span class="text-danger" th:errors="${Invoice.totalPrice}"></span>
                         </div>
 
-                        <!-- Champ Customer -->
+
                         <div class="mb-3">
                             <label for="customer" class="form-label">Client</label>
                             <select class="form-select w-50" id="customer"  name="customer">
@@ -59,7 +56,7 @@
                             <span class="text-danger" th:errors="${Invoice.customer}"></span>
                         </div>
 
-                        <!-- Champ Quotes -->
+
                         <div class="mb-3">
                             <label for="quotes" class="form-label">Devis</label>
                             <select class="form-select w-50" id="quotes" th:each="quotes : ${ListQuotes}" name="quotes">
@@ -83,4 +80,5 @@
 
 </body>
 </html>
+
 
