@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card-body">
+        <div class="container" align="center">
+            <form action="/updateproduct" method="post">
+                <input class="form-control" type="hidden" name="id" th:value="${ProductToBeUpdated.getId()}">
+                <div class="mb-3">
+                    <label for="invoiceNumber" class="form-label">Nom du produit</label>
+                    <input type="text" class="form-control w-50" id="invoiceNumber" name="invoiceNumber"
+                           th:value="${ProductToBeUpdated.getName()}">
+
+                </div>
+                <div class="mb-3">
+
+                    <label for="invoiceDate" class="form-label">Description</label>
+                    <input type="text  " class="form-control w-50" id="invoiceDate" name="invoiceDate"
+                           th:value="${ProductToBeUpdated.getDescription()}">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label for="Designation" class="form-label">Categorie </label>
+                    <input type="text" class="form-control w-50" id="Designation" name="Designation"
+                           th:value="${ProductToBeUpdated.getCategory()}">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label for="qte" class="form-label">Prix</label>
+                    <input type="text" class="form-control w-50" id="qte" name="qte"
+                           th:value="${ProductToBeUpdated.getPrice()}">
+
+                </div>
+                <div class="mb-3">
+
+                    <label for="price" class="form-label">Tva</label>
+                    <input type="text" class="form-control w-50" id="price" name="price"
+                           th:value="${ProductToBeUpdated.getTaux_tva()}">
+
+                </div>
+
+
+                <button type="submit" class="btn btn-primary form-control w-50" value="Modifier">Modifier</button>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Index page</title>
+    <link rel="stylesheet"
+          href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card-body">
+        <div class="container">
+            <form action="/ajouterclient" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nom du client </label>
+                    <input type="text" class="form-control w-50" id="name" name="name">
+                    <span class="text-danger" th:error="${client.name}"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email du client </label>
+                    <input type="text" class="form-control w-50" id="email" name="email">
+                    <span class="text-danger" th:error="${client.email}"></span>
+
+                </div>
+                <div class="mb-3">
+                    <label for="phonenumber" class="form-label">Numero du telephone </label>
+                    <input type="text" class="form-control w-50" id="phonenumber" name="phonenumber">
+                    <span class="text-danger" th:error="${client.phonenumber}"></span>
+
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Adresse</label>
+                    <input type="text" class="form-control w-50" id="address" name="address">
+                    <span class="text-danger" th:error="${client.address}"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary form-control w-50" value="Ajouter">Ajouter</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

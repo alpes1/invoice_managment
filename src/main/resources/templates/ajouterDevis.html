@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="template"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Produits</title>
+    <link rel="stylesheet"
+          href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card-body">
+        <div class="container" align="center">
+            <form action="/ajouterDevis" method="post">
+                <div class="mb-3">
+                    <label for="quote_Number" class="form-label">Numéro de devis</label>
+                    <input type="text" class="form-control w-50" id="quote_Number" name="quote_Number">
+                    <span class="text-danger" th:errors="${devis.quote_Number}"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="quote_Date" class="form-label">Date de devis</label>
+                    <input type="date" class="form-control w-50" id="quote_Date" name="quote_Date">
+                    <span class="text-danger" th:errors="${devis.quote_Date}"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="totalprice" class="form-label">Quantité</label>
+                    <input type="text" class="form-control w-50" id="totalprice" name="totalprice">
+                    <span class="text-danger" th:errors="${devis.totalprice}"></span>
+                </div>
+                <!--                <div class="mb-3">
+                                    <label for="price" class="form-label">Prix</label>
+                                    <input type="text" class="form-control w-50" id="price" name="price">
+                                    <span class="text-danger" th:errors="${devis.invoice}"></span>
+                                </div>-->
+
+                <!-- Champ Customer -->
+                <div class="mb-3">
+                    <label for="customer" class="form-label">Client</label>
+                    <select class="form-select w-50" id="customer" name="customer">
+
+                        <option th:each="client : ${ListOfcustomers}" th:value="${client.id}"
+                                th:text="${client.customerName}"></option>
+                    </select>
+                    <span class="text-danger" th:errors="${devis.customer}"></span>
+                </div>
+
+                <!-- Champ Quotes -->
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary form-control w-50">Ajouter ligne de produit</button>
+
+                </div>
+
+
+                <button type="submit" class="btn btn-primary form-control w-50" value="Ajouter">Ajouter</button>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>
+</div>
+
+<script>
+    `
+    <label htmlFor="product" className="form-label">choose product </label>
+    <select className="form-select w-50" id="hiddenListProduct">
+
+    </select>
+
+    <label htmlFor="quantity" className="form-label"> Quantity </label>
+    <input type="number" className="form-control w-50" id="quantity" th:value="${productLine.quantity}"
+           name="quantity"/>
+           `
+</script>
+</body>
+</html>
+
