@@ -38,6 +38,17 @@
                     <input type="text" class="form-control w-50" id="price" name="price">
                     <span class="text-danger" th:error="${product.price}"></span>
                 </div>
+                <div class="mb-3">
+                    <label for="taux_tva" class="form-label">Taux de Tva </label>
+                    <select type="text" class="form-control w-50" id="taux_tva" name="taux_tva">
+                        <option value="20">20</option>
+                        <option value="10">10</option>
+                        <option value="7">7</option>
+                        <option value="0">0</option>
+                    </select>
+                    <span class="text-danger" th:error="${product.taux_tva}"></span>
+
+                </div>
 
                 <button type="submit" class="btn btn-primary form-control w-50" value="Ajouter">Ajouter</button>
             </form>
