@@ -16,6 +16,7 @@ public interface QuotesRepository extends JpaRepository<Quotes,Integer> {
     //Page<Quotes> findQuotesByProductLines(String keyword , Pageable pageable);
     //Page<Quotes> findQuotesByServices(String keyword , Pageable pageable);
     List<Quotes> findAll();
+    Quotes findQuotesById(Integer id ) ;
 
    // Long sumQuotesByProductLines
 }

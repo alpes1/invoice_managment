@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 <body>
@@ -18,7 +19,8 @@
                     <p class="text-base font-normal text-gray-500 dark:text-gray-400">Le nombre des factures</p>
                 </div>
                 <div
-                        class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center" th:text="${totalInvoices}">
+                        class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center"
+                        th:text="${totalInvoices}">
 
                     <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                          viewBox="0 0 10 14">
@@ -52,8 +54,8 @@
         <div class="flex justify-between ">
             <div>
                 <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2"
-                    th:text="${totalInvoices}"></h5>
-                <p class="text-base font-normal text-gray-500 dark:text-gray-400">Le nombre des factures</p>
+                    th:text="${totalsells}"></h5>
+                <p class="text-base font-normal text-gray-500 dark:text-gray-400">chiffre d'affaire</p>
             </div>
             <div
                     class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
@@ -67,454 +69,59 @@
         </div>
     </div>
 </div>
-amCharts
-Products
-Demos
-Download
-Buy
-Support & Licenses
-Docs
-Previous All demos Next
-Jul 06, 2024
-Open in:
-Manipulate chart data with mouse
-Click and move mouse anywhere on plot area to change the graph.
+<div class="container">
+    <canvas id="myChart" width="400" height="200"></canvas>
+</div>
 
-Key implementation details
-We setup pointer event handlers and on globalpointermove event handler check whether the user is dragging a graph’s point and set its value according to the pointer coordinates converted to value with the positionToValue() method.
-
-Related tutorials
-XY chart
-Line series
-Value axis
-Events
-Demo source
-JavaScript
-TypeScript / ES6
-...
-<!-- Styles -->
-<style>
-    #chartdiv {
-        width: 100%;
-        max-width:100%;
-        height: 500px;
-    }
-</style>
-
-<!-- Resources -->
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Responsive.js"></script>
-
-<!-- Chart code -->
 <script>
-    am5.ready(function() {
+    async function fetchData() {
+        const response = await fetch('/chartData');
+        const data = await response.json();
+        return data;
+    }
 
-// Create root element
-// https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        var root = am5.Root.new("chartdiv");
+    async function createChart() {
+        const chartData = await fetchData();
 
-        const myTheme = am5.Theme.new(root);
-
-        myTheme.rule("AxisLabel", ["minor"]).setAll({
-            dy:1
-        });
-
-        myTheme.rule("AxisLabel").setAll({
-            fontSize:"0.9em"
-        });
-
-
-// Set themes
-// https://www.amcharts.com/docs/v5/concepts/themes/
-        root.setThemes([
-            am5themes_Animated.new(root),
-            myTheme,
-            am5themes_Responsive.new(root)
-        ]);
-
-
-// Create chart
-// https://www.amcharts.com/docs/v5/charts/xy-chart/
-        var chart = root.container.children.push(am5xy.XYChart.new(root, {
-            wheelX: "panX",
-            wheelY: "zoomX",
-            pinchZoomX: true,
-            paddingLeft: 0
-        }));
-
-
-// Add cursor
-// https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
-        var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
-            behavior: "none"
-        }));
-        cursor.lineY.set("visible", false);
-
-
-// Generate random data
-        var date = new Date();
-        date.setHours(0, 0, 0, 0);
-        var value = 100;
-
-        function generateData() {
-            value = Math.round((Math.random() * 10 - 5) + value);
-            am5.time.add(date, "day", 1);
-            return {
-                date: date.getTime(),
-                value: value
-            };
-        }
-
-        function generateDatas(count) {
-            var data = [];
-            for (var i = 0; i < count; ++i) {
-                data.push(generateData());
-            }
-            return data;
-        }
-
-
-// Create axes
-// https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-        var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-            maxDeviation: 0.2,
-            baseInterval: {
-                timeUnit: "day",
-                count: 1
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: chartData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
             },
-            renderer: am5xy.AxisRendererX.new(root, {
-                minorGridEnabled: true,
-                minorLabelsEnabled: true
-            }),
-            tooltip: am5.Tooltip.new(root, {})
-        }));
-
-        xAxis.set("minorDateFormats", {
-            "day":"dd",
-            "month":"MMM"
-        });
-
-        var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-            renderer: am5xy.AxisRendererY.new(root, {
-                pan: "zoom"
-            })
-        }));
-
-
-// Add series
-// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-        var series = chart.series.push(am5xy.LineSeries.new(root, {
-            name: "Series",
-            xAxis: xAxis,
-            yAxis: yAxis,
-            valueYField: "value",
-            valueXField: "date",
-            tooltip: am5.Tooltip.new(root, {
-                labelText: "{valueY}"
-            })
-        }));
-
-        series.bullets.push(function() {
-            var graphics = am5.Circle.new(root, {
-                radius: 4,
-                interactive: true,
-                cursorOverStyle: "ns-resize",
-                stroke: series.get("stroke"),
-                fill: am5.color(0xffffff)
-            });
-
-            return am5.Bullet.new(root, {
-                sprite: graphics
-            });
-        });
-
-// Add scrollbar
-// https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-        chart.set("scrollbarX", am5.Scrollbar.new(root, {
-            orientation: "horizontal"
-        }));
-
-// manipulating with mouse code
-        var isDown = false;
-
-// register down
-        chart.plotContainer.events.on("pointerdown", function() {
-            isDown = true;
-        })
-// register up
-        chart.plotContainer.events.on("globalpointerup", function() {
-            isDown = false;
-        })
-
-        chart.plotContainer.events.on("globalpointermove", function(e) {
-            // if pointer is down
-            if (isDown) {
-                // get tooltip data item
-                var tooltipDataItem = series.get("tooltipDataItem");
-                if (tooltipDataItem) {
-                    if (e.originalEvent) {
-
-                        var position = yAxis.coordinateToPosition(chart.plotContainer.toLocal(e.point).y);
-                        var value = yAxis.positionToValue(position);
-                        // need to set bot working and original value
-                        tooltipDataItem.set("valueY", value);
-                        tooltipDataItem.set("valueYWorking", value);
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
             }
-        })
-
-        chart.plotContainer.children.push(am5.Label.new(root, {
-            x: am5.p100,
-            centerX: am5.p100,
-            text: "Click and move mouse anywhere on plot area to change the graph"
-        }))
-
-// Set data
-        var data = generateDatas(40);
-        series.data.setAll(data);
-
-
-// Make stuff animate on load
-// https://www.amcharts.com/docs/v5/concepts/animations/
-        series.appear(1000);
-        chart.appear(1000, 100);
-
-    }); // end am5.ready()
-</script>
-
-<!-- HTML -->
-<div id="chartdiv"></div>
-amCharts
-More info
-Accessibility Features
-About amCharts
-Press Kit
-Getting support
-Subscribe to amNews
-Blog
-Products
-amCharts 5: Charts
-amCharts 5: Maps
-amCharts 5: Stock Chart
-WordPress Plugin
-Version information
-3rd party software
-Tools & Resources
-Online Map Editor
-Visited Countries Map
-Visited States Map
-Free SVG Maps
-More Online Tools
-Contact Us
-contact@amcharts.com
-Support Center
-Reporting a vulnerability
-Legal Stuff
-Privacy Policy
-Terms & Conditions
-Facebook
-Twitter
-LinkedIn
-Copyright © 2006-2024, amCharts. All rights reserved.
-We use cookies on our website to support technical features that enhance your user experience. We also collect anonymous analytical data, as described in our Privacy policy.Source of the demo
-<!-- Styles -->
-<style>
-    #chartdiv {
-        width: 100%;
-        max-width:100%;
-        height: 500px;
+        });
     }
-</style>
 
-<!-- Resources -->
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Responsive.js"></script>
-
-<!-- Chart code -->
-<script>
-    am5.ready(function() {
-
-// Create root element
-// https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        var root = am5.Root.new("chartdiv");
-
-        const myTheme = am5.Theme.new(root);
-
-        myTheme.rule("AxisLabel", ["minor"]).setAll({
-            dy:1
-        });
-
-        myTheme.rule("AxisLabel").setAll({
-            fontSize:"0.9em"
-        });
-
-
-// Set themes
-// https://www.amcharts.com/docs/v5/concepts/themes/
-        root.setThemes([
-            am5themes_Animated.new(root),
-            myTheme,
-            am5themes_Responsive.new(root)
-        ]);
-
-
-// Create chart
-// https://www.amcharts.com/docs/v5/charts/xy-chart/
-        var chart = root.container.children.push(am5xy.XYChart.new(root, {
-            wheelX: "panX",
-            wheelY: "zoomX",
-            pinchZoomX: true,
-            paddingLeft: 0
-        }));
-
-
-// Add cursor
-// https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
-        var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
-            behavior: "none"
-        }));
-        cursor.lineY.set("visible", false);
-
-
-// Generate random data
-        var date = new Date();
-        date.setHours(0, 0, 0, 0);
-        var value = 100;
-
-        function generateData() {
-            value = Math.round((Math.random() * 10 - 5) + value);
-            am5.time.add(date, "day", 1);
-            return {
-                date: date.getTime(),
-                value: value
-            };
-        }
-
-        function generateDatas(count) {
-            var data = [];
-            for (var i = 0; i < count; ++i) {
-                data.push(generateData());
-            }
-            return data;
-        }
-
-
-// Create axes
-// https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-        var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-            maxDeviation: 0.2,
-            baseInterval: {
-                timeUnit: "day",
-                count: 1
-            },
-            renderer: am5xy.AxisRendererX.new(root, {
-                minorGridEnabled: true,
-                minorLabelsEnabled: true
-            }),
-            tooltip: am5.Tooltip.new(root, {})
-        }));
-
-        xAxis.set("minorDateFormats", {
-            "day":"dd",
-            "month":"MMM"
-        });
-
-        var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-            renderer: am5xy.AxisRendererY.new(root, {
-                pan: "zoom"
-            })
-        }));
-
-
-// Add series
-// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-        var series = chart.series.push(am5xy.LineSeries.new(root, {
-            name: "Series",
-            xAxis: xAxis,
-            yAxis: yAxis,
-            valueYField: "value",
-            valueXField: "date",
-            tooltip: am5.Tooltip.new(root, {
-                labelText: "{valueY}"
-            })
-        }));
-
-        series.bullets.push(function() {
-            var graphics = am5.Circle.new(root, {
-                radius: 4,
-                interactive: true,
-                cursorOverStyle: "ns-resize",
-                stroke: series.get("stroke"),
-                fill: am5.color(0xffffff)
-            });
-
-            return am5.Bullet.new(root, {
-                sprite: graphics
-            });
-        });
-
-// Add scrollbar
-// https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-        chart.set("scrollbarX", am5.Scrollbar.new(root, {
-            orientation: "horizontal"
-        }));
-
-// manipulating with mouse code
-        var isDown = false;
-
-// register down
-        chart.plotContainer.events.on("pointerdown", function() {
-            isDown = true;
-        })
-// register up
-        chart.plotContainer.events.on("globalpointerup", function() {
-            isDown = false;
-        })
-
-        chart.plotContainer.events.on("globalpointermove", function(e) {
-            // if pointer is down
-            if (isDown) {
-                // get tooltip data item
-                var tooltipDataItem = series.get("tooltipDataItem");
-                if (tooltipDataItem) {
-                    if (e.originalEvent) {
-
-                        var position = yAxis.coordinateToPosition(chart.plotContainer.toLocal(e.point).y);
-                        var value = yAxis.positionToValue(position);
-                        // need to set bot working and original value
-                        tooltipDataItem.set("valueY", value);
-                        tooltipDataItem.set("valueYWorking", value);
-                    }
-                }
-            }
-        })
-
-        chart.plotContainer.children.push(am5.Label.new(root, {
-            x: am5.p100,
-            centerX: am5.p100,
-            text: "Click and move mouse anywhere on plot area to change the graph"
-        }))
-
-// Set data
-        var data = generateDatas(40);
-        series.data.setAll(data);
-
-
-// Make stuff animate on load
-// https://www.amcharts.com/docs/v5/concepts/animations/
-        series.appear(1000);
-        chart.appear(1000, 100);
-
-    }); // end am5.ready()
+    createChart();
 </script>
-
-<!-- HTML -->
-
 
 </body>
 </html>

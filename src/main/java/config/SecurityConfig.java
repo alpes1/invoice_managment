@@ -28,7 +28,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/editInvoice","/ajouterFacture","/index","/dashboard","/ajouterDevis","/ajouterproduit", "/listeproduit","/ajouterclient","/listeclient", "/ajouterfournisseur","/ajouterproduit","/ajouterCustomer",
                                 "/deleteProduit","/editProduit").authenticated()
-                        .requestMatchers( "/webjars/**").permitAll())
+                        .requestMatchers( "/webjars/**").permitAll()
+
+
+                )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .permitAll()
@@ -45,25 +48,12 @@ public class SecurityConfig {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails adminmanager = User.withUsername("adminmanager")
-                .password("12345")
-                .roles("managetable", "delete", "update")
-                //.roles("admin")
-                .build();
-        UserDetails admin = User.withUsername("admin")
-                .password("12345")
-                //.authorities("admin")
-                .roles("admin")
-                .build();
+
         UserDetails user = User.withUsername("user")
                 .password("12345")
                 .roles("user")
                 .build();
-        UserDetails Customer = User.withUsername("Customer")
-                .password("12345")
-                .roles("user")
-                .build();
-        return new InMemoryUserDetailsManager(adminmanager,Customer, admin, user);
+        return new InMemoryUserDetailsManager(user);
     }
 
     @Bean

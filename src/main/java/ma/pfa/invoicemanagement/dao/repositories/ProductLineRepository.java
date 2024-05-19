@@ -11,4 +11,5 @@ public interface ProductLineRepository extends JpaRepository< ProductLine,Intege
 
 
     public List<ProductLine> findProductLineByQuotes(Quotes q) ;
+
 }

@@ -31,8 +31,6 @@ public class Product {
 
     private Double taux_tva ;
 
-    @ManyToMany(mappedBy = "products")
-    private Collection<Invoice> invoices= new ArrayList<>() ;
 
     @OneToMany(mappedBy = "product")
     private Collection<ProductLine> productLines = new ArrayList<>();

@@ -30,8 +30,8 @@ public class Invoice {
     @ManyToOne
     private Customer customer ;
 
-    @ManyToMany
-    private Collection<Product> products = new ArrayList<>();
+   @OneToMany(mappedBy = "invoice")
+   private Collection<ProductLine> productLines = new ArrayList<>();
 
     @OneToOne(mappedBy = "invoice")
 

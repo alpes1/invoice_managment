@@ -18,7 +18,7 @@ import java.util.Date;
 public class Quotes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+    private Integer id ;
 
     private Integer quote_Number;
 

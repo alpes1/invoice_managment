@@ -20,13 +20,17 @@ public interface QuotesManager {
 
     public Page<Quotes> getAllQuotes(int page , int taille );
 
+
     public Page<Quotes> getQuotesByCustomer(int page , int taille , String name );
+    public Quotes getQuotesById(Integer id );
 
    // public Page<Quotes> getQuotesByService(int page , int taille , String keyword);
 
     public Page<Quotes> getQuotesByProduct(int page , int taille , String keyword);
 
     public List<Quotes> getAllQuotesList() ;
+
+    public Double getTotalPrice();
 
 
 

@@ -30,8 +30,6 @@ public class InvoiceController {
     @Autowired
     QuotesManager quotesManager ;
 
-    @GetMapping("")
-    public String Start(){return "redirect:/";}
 
 
 

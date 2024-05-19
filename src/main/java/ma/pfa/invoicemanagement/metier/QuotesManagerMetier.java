@@ -48,6 +48,11 @@ public class QuotesManagerMetier implements QuotesManager{
     }
 
     @Override
+    public Quotes getQuotesById(Integer id) {
+        return quotesRepository.findQuotesById(id);
+    }
+
+    @Override
     public Page<Quotes> getQuotesByProduct(int page, int taille, String keyword) {
         return null;
     }
@@ -69,6 +74,10 @@ public class QuotesManagerMetier implements QuotesManager{
         return quotesRepository.findAll();
     }
 
+    @Override
+    public Double getTotalPrice() {
+        return null;
+    }
 
 
 }
