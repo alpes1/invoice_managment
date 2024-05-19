@@ -36,17 +36,20 @@ public class InvoiceController {
 
 
 
-    /*@GetMapping("/dashboard")
+    @GetMapping("/dashboard")
     public String dash(Model model){
 
         List<Invoice> invoices = invoiceManager.getAllInvoice();
+        /*
         BigDecimal totalPrix =  new BigDecimal(invoices.stream()
-                .mapToDouble(Invoice::getTotalPrice)
+                .mapToDouble(Invoice::)
                 .sum());
 
-        model.addAttribute("CA" , totalPrix);
+        model.addAttribute("CA" , totalPrix);*/
+
         model.addAttribute("totalInvoices" , invoices.size());
-        return "Dashboard";}*/
+        return "Dashboard";
+    }
 
 
     @GetMapping("/index")

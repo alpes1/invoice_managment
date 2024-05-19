@@ -1,15 +1,12 @@
-<!DOCTYPE html>
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+>
 <head>
     <meta charset="UTF-8">
-    <title>Gestion des Produits</title>
-    <link rel="stylesheet"
-          href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
-    <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    <title>Title</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body>
 <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
@@ -93,16 +90,13 @@
 
 <div class="p-4 sm:ml-64">
 
-
+    <div class="p-3 m-2">
+        <div class="card">
             <div class="card-body">
-                <section layout:fragment="content"></section>
-            </div>
-            <div class="card-footer" align="center">&copy; copyright: xproce 2024<br/> X - Casablanca- Morocco</br>
-                badr.hirchoua@gmail.com
+                <section layout:fragment="sidebarOnly"></section>
             </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>
