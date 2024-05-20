@@ -17,37 +17,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProductController {
 
     @Autowired
-    ProductManager productManager ;
-
+    ProductManager productManager;
 
     @GetMapping("/listeproduit")
     public String ListProducts(Model model,
-                               @RequestParam(name = "page" ,defaultValue = "0") int page ,
-                               @RequestParam(name = "taille" , defaultValue = "2") int taille
-    )
-    {
-        Page<Product> products = productManager.getAllProduct(page ,taille);
-        model.addAttribute("ListProduct",products);
-        model.addAttribute("page",page);
-        model.addAttribute("taille",taille);
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "taille", defaultValue = "2") int taille) {
+        Page<Product> products = productManager.getAllProduct(page, taille);
+        model.addAttribute("ListProduct", products);
+        model.addAttribute("page", page);
+        model.addAttribute("taille", taille);
         return "listeProduit";
     }
 
-
     @GetMapping("/ajouterproduit")
-    public String ajouterProduitGet(Model model)
-    {
+    public String ajouterProduitGet(Model model) {
         model.addAttribute("product", new Product());
-        return "ajouterProduit" ;
+        return "ajouterProduit";
     }
 
-    @PostMapping("/ajouterProduit")
-    public String ajouterProduitPost(Model model , @Valid Product product, BindingResult bindingResult)
-    {
+    @PostMapping("/ajouterproduit")
+    public String ajouterProduitPost(Model model, @Valid Product product, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "error";
-        productManager.addProduct(product) ;
-        return "redirect:/listeproduit" ;
+        productManager.addProduct(product);
+        return "redirect:/listeproduit";
     }
 
     @GetMapping("/deleteProduit")
@@ -59,12 +53,11 @@ public class ProductController {
         }
     }
 
-
-    @GetMapping("/editProduit")
+    @GetMapping("/editproduit")
     public String editProduit(Model model, @RequestParam(name = "id") Integer id) {
         Product product = productManager.getProductById(id);
         if (product != null) {
-            model.addAttribute("ProductToBeUpdated", product);
+            model.addAttribute("product", product);
             return "updateproduct";
         } else {
             return "error";
@@ -72,11 +65,9 @@ public class ProductController {
     }
 
     @PostMapping("/updateproduct")
-    public String ajouterProductAction(@ModelAttribute("ProductToBeUpdated") Product product)
-    {
-        productManager.UpdateProduct(product) ;
-        return "redirect:/index" ;
+    public String ajouterProductAction(@ModelAttribute("ProductToBeUpdated") Product product) {
+        productManager.UpdateProduct(product);
+        return "redirect:/listeproduit";
     }
-
 
 }

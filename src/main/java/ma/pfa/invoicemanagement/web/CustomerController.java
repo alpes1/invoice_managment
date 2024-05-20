@@ -20,10 +20,8 @@ public class CustomerController {
 
     @GetMapping("/listeclient")
     public String listeClient(Model model,
-                              @RequestParam(name = "page", defaultValue = "0") int page,
-                              @RequestParam(name = "taille", defaultValue = "10") int taille
-    )
-    {
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "taille", defaultValue = "10") int taille) {
         Page<Customer> customers = customerManager.getAllCustomer(page, taille);
         model.addAttribute("listClient", customers);
         int[] pages = new int[customers.getTotalPages()];
@@ -44,6 +42,6 @@ public class CustomerController {
             return "ajouterClient";
 
         customerManager.addCustomer(customer);
-        return "redirect:/Index";
+        return "redirect:/listeclient";
     }
 }

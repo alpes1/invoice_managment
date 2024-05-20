@@ -1,6 +1,5 @@
 package ma.pfa.invoicemanagement.web;
 
-
 import jakarta.validation.Valid;
 import ma.pfa.invoicemanagement.dao.entities.Customer;
 import ma.pfa.invoicemanagement.dao.entities.Quotes;
@@ -24,99 +23,102 @@ import java.util.List;
 @Controller
 public class InvoiceController {
     @Autowired
-    InvoiceManager invoiceManager ;
+    InvoiceManager invoiceManager;
     @Autowired
-    CustomerManager customerManager ;
+    CustomerManager customerManager;
     @Autowired
-    QuotesManager quotesManager ;
-
-
-
-
+    QuotesManager quotesManager;
 
     @GetMapping("/dashboard")
-    public String dash(Model model){
+    public String dash(Model model) {
 
         List<Invoice> invoices = invoiceManager.getAllInvoice();
         /*
-        BigDecimal totalPrix =  new BigDecimal(invoices.stream()
-                .mapToDouble(Invoice::)
-                .sum());
+         * BigDecimal totalPrix = new BigDecimal(invoices.stream()
+         * .mapToDouble(Invoice::)
+         * .sum());
+         * 
+         * model.addAttribute("CA" , totalPrix);
+         */
 
-        model.addAttribute("CA" , totalPrix);*/
-
-        model.addAttribute("totalInvoices" , invoices.size());
+        model.addAttribute("totalInvoices", invoices.size());
         return "Dashboard";
     }
 
-
     @GetMapping("/index")
-    public String ListInvoice(Model model ,
-                              @RequestParam(name = "page", defaultValue = "0") int page ,
-                              @RequestParam(name = "taille", defaultValue = "6") int taille
+    public String ListInvoice(Model model,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "taille", defaultValue = "6") int taille
 
-                              )
-    {
-        Page<Invoice> invoices = invoiceManager.getAllInvoice(page, taille) ;
-
+    ) {
+        Page<Invoice> invoices = invoiceManager.getAllInvoice(page, taille);
 
         int[] pages = new int[invoices.getTotalPages()];
-        model.addAttribute("ListInvoices" , invoices);
-        model.addAttribute("page" ,page);
-        model.addAttribute("pages",pages);
+        model.addAttribute("ListInvoices", invoices);
+        model.addAttribute("page", page);
+        model.addAttribute("pages", pages);
 
         return "index";
     }
+
     @GetMapping("/ajouterFacture")
-    public String ajouterInvoiceGet(Model model)
-    {
-        List<Customer> customers = customerManager.getAllCustomerList() ;
+    public String ajouterInvoiceGet(Model model) {
+        List<Customer> customers = customerManager.getAllCustomerList();
         List<Quotes> quotes = quotesManager.getAllQuotesList();
 
-        model.addAttribute("ListCLients",customers);
-        model.addAttribute("ListQuotes",quotes);
-        model.addAttribute("Invoice",new Invoice());
-        return "ajouterFacture" ;
+        model.addAttribute("ListCLients", customers);
+        model.addAttribute("ListQuotes", quotes);
+        model.addAttribute("Invoice", new Invoice());
+        return "ajouterFacture";
     }
+
     @PostMapping("/ajouterFacture")
-    public String ajouterInvoicePost(Model model ,
-                                 @Valid Invoice invoice,
-                                 BindingResult bindingResult)
-    {
+    public String ajouterInvoicePost(Model model,
+            @Valid Invoice invoice,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "redirect:error.html";
         invoice.setCreated_at(LocalDate.now());
         invoice.setUpdated_at(LocalDate.now());
-        invoiceManager.addInvoice(invoice) ;
+        invoiceManager.addInvoice(invoice);
         return "redirect:index";
     }
 
-
-
-
-/*@PostMapping("/ajouterfacture.html")
-    public String ajouterFactureAction(Model model ,
-                                       @RequestParam(name = "id") int id ,
-                                       @RequestParam(name = "InvoiceNumber") Integer InvoiceNumber,
-                                       @RequestParam(name = "invoiceDate")Date invoiceDate ,
-                                       @RequestParam(name = "Designation") String Designation,
-                                       @RequestParam(name = "quantite") int qte ,
-                                       @RequestParam(name="price") double price ,
-                                       @RequestParam(name="totalPrice")double totalPrice,
-                                       @RequestParam(name="logo") MultipartFile logo
-) throws IOException {
-
-    StringBuilder fileNames = new StringBuilder();
-    Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, logo.getOriginalFilename());
-    fileNames.append(logo.getOriginalFilename());
-    Files.write(fileNameAndPath, logo.getBytes());
-
-
-
-   // Invoice invoice = new Invoice(id, InvoiceNumber, invoiceDate, Designation, qte, price, totalPrice, new Date(), new Date(), logo.toString(), null);
-    //invoiceManager.addInvoice(invoice);
-    return "redirect:Index";
-}*/
+    /*
+     * @PostMapping("/ajouterfacture.html")
+     * public String ajouterFactureAction(Model model ,
+     * 
+     * @RequestParam(name = "id") int id ,
+     * 
+     * @RequestParam(name = "InvoiceNumber") Integer InvoiceNumber,
+     * 
+     * @RequestParam(name = "invoiceDate")Date invoiceDate ,
+     * 
+     * @RequestParam(name = "Designation") String Designation,
+     * 
+     * @RequestParam(name = "quantite") int qte ,
+     * 
+     * @RequestParam(name="price") double price ,
+     * 
+     * @RequestParam(name="totalPrice")double totalPrice,
+     * 
+     * @RequestParam(name="logo") MultipartFile logo
+     * ) throws IOException {
+     * 
+     * StringBuilder fileNames = new StringBuilder();
+     * Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY,
+     * logo.getOriginalFilename());
+     * fileNames.append(logo.getOriginalFilename());
+     * Files.write(fileNameAndPath, logo.getBytes());
+     * 
+     * 
+     * 
+     * // Invoice invoice = new Invoice(id, InvoiceNumber, invoiceDate, Designation,
+     * qte, price, totalPrice, new Date(), new Date(), logo.toString(), null);
+     * //invoiceManager.addInvoice(invoice);
+     * return "redirect:Index";
+     * }
+     */
 
     @PostMapping("/ajouter")
     public String ajouterInvoiceAction(@ModelAttribute("InvoiceToBeUpdated") Invoice invoice) {
@@ -124,34 +126,31 @@ public class InvoiceController {
         invoiceManager.updateInvoice(invoice);
         return "redirect:/index";
     }
-@GetMapping("/editInvoice")
-public String editnvoice(Model model, @RequestParam(name = "id") Integer id) {
-    Invoice  invoice = invoiceManager.getInvoiceById(id);
 
-    List<Customer> customers = customerManager.getAllCustomerList() ;
-    List<Quotes> quotes = quotesManager.getAllQuotesList();
+    @GetMapping("/editInvoice")
+    public String editnvoice(Model model, @RequestParam(name = "id") Integer id) {
+        Invoice invoice = invoiceManager.getInvoiceById(id);
 
+        List<Customer> customers = customerManager.getAllCustomerList();
+        List<Quotes> quotes = quotesManager.getAllQuotesList();
 
-    if (invoice != null) {
-        model.addAttribute("InvoiceToBeUpdated", invoice);
-        model.addAttribute("ListClients",customers);
-        model.addAttribute("ListQuotes",quotes);
-        return "UpdateInvoice";
-    } else {
-        return "error";
+        if (invoice != null) {
+            model.addAttribute("InvoiceToBeUpdated", invoice);
+            model.addAttribute("ListClients", customers);
+            model.addAttribute("ListQuotes", quotes);
+            return "UpdateInvoice";
+        } else {
+            return "error";
+        }
     }
-}
-
 
     @GetMapping("/deleteInvoice")
-    public String deleteInvoiceById(Model model , @RequestParam(name = "id") Integer id )
-    {
-        if(!invoiceManager.deleteInvoice(id))
-            return "error" ;
+    public String deleteInvoiceById(Model model, @RequestParam(name = "id") Integer id) {
+        if (!invoiceManager.deleteInvoice(id))
+            return "error";
 
-        return "redirect:index" ;
-
-    }
+        return "redirect:index";
 
     }
 
+}

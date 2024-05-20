@@ -1,66 +1,52 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="template">
-<head>
-    <meta charset="UTF-8">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
-</head>
-<body>
-<div layout:fragment="content">
-    <div class="card-body">
-        <div class="container" align="center">
-            <form action="/updateproduct" method="post">
-                <input class="form-control" type="hidden" name="id" th:value="${ProductToBeUpdated.getId()}">
-                <div class="mb-3">
-                    <label for="invoiceNumber" class="form-label">Nom du produit</label>
-                    <input type="text" class="form-control w-50" id="invoiceNumber" name="invoiceNumber"
-                           th:value="${ProductToBeUpdated.getName()}">
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <div class="card-body">
+        <div class="container">
+          <form action="/updateproduct" method="post">
+            <input class="form-control" type="hidden" name="id" th:value="${product.getId()}" />
 
-                </div>
-                <div class="mb-3">
+            <div class="mb-3">
+              <label for="name" class="form-label">Products Name</label>
+              <input type="text" class="form-control w-50" id="name" name="name" th:value="${product.name}" />
+              <span class="text-danger" th:error="${product.name}"></span>
+            </div>
+            <div class="mb-3">
+              <label for="category" class="form-label">Category </label>
+              <input type="text" class="form-control w-50" id="category" name="category" th:value="${product.category}" />
+              <span class="text-danger" th:error="${product.category}"></span>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description du Produit </label>
+              <input type="text" class="form-control w-50" id="description" name="description" th:value="${product.description}" />
+              <span class="text-danger" th:error="${product.description}"></span>
+            </div>
+            <div class="mb-3">
+              <label for="price" class="form-label">Prix</label>
+              <input type="text" class="form-control w-50" id="price" name="price" th:value="${product.price}" />
+              <span class="text-danger" th:error="${product.price}"></span>
+            </div>
 
-                    <label for="invoiceDate" class="form-label">Description</label>
-                    <input type="text  " class="form-control w-50" id="invoiceDate" name="invoiceDate"
-                           th:value="${ProductToBeUpdated.getDescription()}">
+            <div class="mb-3">
+              <label for="taux_tva" class="form-label">Taux de Tva</label>
+              <select class="form-control w-50" id="taux_tva" name="taux_tva">
+                <option th:value="20" th:text="'20'" th:selected="${product.taux_tva == 20}">20</option>
+                <option th:value="10" th:text="'10'" th:selected="${product.taux_tva == 10}">10</option>
+                <option th:value="7" th:text="'7'" th:selected="${product.taux_tva == 7}">7</option>
+                <option th:value="0" th:text="'0'" th:selected="${product.taux_tva == 0}">0</option>
+              </select>
+              <span class="text-danger" th:error="${product.taux_tva}"></span>
+            </div>
 
-                </div>
-
-                <div class="mb-3">
-
-                    <label for="Designation" class="form-label">Categorie </label>
-                    <input type="text" class="form-control w-50" id="Designation" name="Designation"
-                           th:value="${ProductToBeUpdated.getCategory()}">
-
-                </div>
-
-                <div class="mb-3">
-
-                    <label for="qte" class="form-label">Prix</label>
-                    <input type="text" class="form-control w-50" id="qte" name="qte"
-                           th:value="${ProductToBeUpdated.getPrice()}">
-
-                </div>
-                <div class="mb-3">
-
-                    <label for="price" class="form-label">Tva</label>
-                    <input type="text" class="form-control w-50" id="price" name="price"
-                           th:value="${ProductToBeUpdated.getTaux_tva()}">
-
-                </div>
-
-
-                <button type="submit" class="btn btn-primary form-control w-50" value="Modifier">Modifier</button>
-            </form>
+            <button type="submit" class="btn btn-primary form-control w-50" value="Ajouter">Update</button>
+          </form>
         </div>
-
-
+      </div>
     </div>
-
-</div>
-</div>
-
-
-</body>
+  </body>
 </html>

@@ -14,31 +14,28 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 @SpringBootApplication
-public class InvoiceManagementApplication  implements CommandLineRunner {
-
+public class InvoiceManagementApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(InvoiceManagementApplication.class, args);
     }
-    @Autowired
-    QuotesManager quotesManager ;
-    @Autowired
-    ProductLineManager productLineManager ;
 
+    @Autowired
+    QuotesManager quotesManager;
+    @Autowired
+    ProductLineManager productLineManager;
 
     @Override
     public void run(String... args) throws Exception {
 
-        List<Quotes> quotes = quotesManager.getAllQuotes();
-        List<ProductLine> productLines =productLineManager.getAllProductLines();
-        ProductLine p=productLines.get(0) ;
-        System.out.println(p.getTotalPrice());
-        Quotes q = quotes.get(0);
-        System.out.println(q.getId());
-        System.out.println(productLineManager.sumProductLinesByQuotes(4));
-        System.out.println();
-
-
+        // List<Quotes> quotes = quotesManager.getAllQuotes();
+        // List<ProductLine> productLines =productLineManager.getAllProductLines();
+        // ProductLine p=productLines.get(0) ;
+        // System.out.println(p.getTotalPrice());
+        // Quotes q = quotes.get(0);
+        // System.out.println(q.getId());
+        // System.out.println(productLineManager.sumProductLinesByQuotes(4));
+        // System.out.println();
 
     }
 }

@@ -1,5 +1,18 @@
 package ma.pfa.invoicemanagement.web;
 
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import ma.pfa.invoicemanagement.dao.entities.Customer;
 import ma.pfa.invoicemanagement.dao.entities.Product;
 import ma.pfa.invoicemanagement.dao.entities.ProductLine;
@@ -8,15 +21,6 @@ import ma.pfa.invoicemanagement.metier.CustomerManager;
 import ma.pfa.invoicemanagement.metier.ProductLineManager;
 import ma.pfa.invoicemanagement.metier.ProductManager;
 import ma.pfa.invoicemanagement.metier.QuotesManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Date;
-import java.util.List;
 
 @Controller
 public class QuoteController {
@@ -30,57 +34,92 @@ public class QuoteController {
     @Autowired
     ProductLineManager productLineManager;
 
+    // Crud Actions
 
-    //Crud Actions
+    @GetMapping("/listedevis")
+    public String ListProducts(Model model,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "taille", defaultValue = "2") int taille) {
 
-    @GetMapping("/ajouterDevis")
+        Page<Quotes> devis = quotesManager.getAllQuotes(page, taille);
+
+        model.addAttribute("ListDevis", devis);
+        model.addAttribute("page", page);
+        model.addAttribute("taille", taille);
+        return "listeDevis";
+    }
+
+    @GetMapping("/ajouterdevis")
     public String ajouterDevisGet(Model model) {
         List<Product> products = productManager.getAllProductsList();
         List<Customer> customers = customerManager.getAllCustomerList();
 
-        Quotes quote = new Quotes();
-        model.addAttribute("devis", quote);
-        model.addAttribute("devisId", quote.getId());
-
-
         model.addAttribute("ListOfcustomers", customers);
-
-        //model.addAttribute("productLine" ,p ) ;
-
         model.addAttribute("ListProduit", products);
-
+        model.addAttribute("devis", new Quotes());
 
         return "ajouterDevis";
 
     }
 
-    @PostMapping("/ajouterDevis")
+
+    @PostMapping("/ajouterdevis")
     public String ajouterDevisPost(Model model,
-                                   @RequestParam(name = "quotes_number") int quotes_number,
-                                   @RequestParam(name = "quote_date") Date quote_Date,
-
-                                   @RequestParam(name = "customer_id") Integer customer_id
-
-
-                                    )
-
-
-
+            @RequestParam(name = "quote_Number") int quote_number,
+            @RequestParam(name = "quote_Date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date quote_Date,
+            @RequestParam(name = "customer") Integer customer,
+            @RequestParam(name = "product") List<Integer> products,
+            @RequestParam(name = "quantity") List<Integer> quantities,
+            @RequestParam(name = "price") List<Double> prices)
 
     {
-      /*  Customer cs = customerManager.getCustomerById(customer_id);
-        Quotes quotes = new Quotes(quotes_number,quote_Date,null,null,null,null,null,cs) ;
+        Customer cs = customerManager.getCustomerById(customer);
 
-        quotesManager.addQuotes(quotes);
+        Quotes quotes = new Quotes();
+        quotes.setQuote_Number(quote_number);
+        quotes.setQuote_Date(quote_Date);
+        quotes.setCustomer(cs);
 
-        for (ProductLine p : productlines) {
-            productLine.setQuotes(quotes);
-            productLine.setQuantity(3);
+        Quotes createdQuotes = quotesManager.addQuotes(quotes);
+
+        int numberOfProductLines = products.size();
+        for (int i = 0; i < numberOfProductLines; i++) {
+            ProductLine productLine = new ProductLine();
+            productLine.setProduct(productManager.getProductById(products.get(i)));
+            productLine.setQuotes(createdQuotes);
+            productLine.setQuantity(quantities.get(i));
+            productLine.setPrice(prices.get(i));
+
             productLineManager.addProductLine(productLine);
-        }*/
+        }
 
+        return "redirect:/listedevis";
+    }
 
-        return "redirect:index";
+    @GetMapping("/deletedevis")
+    public String deleteProduit(Model model, @RequestParam(name = "id") Integer id) {
+        if (productManager.deleteProduct(id)) {
+            return "redirect:/listeproduit";
+        } else {
+            return "error";
+        }
+    }
+
+    @GetMapping("/editdevis")
+    public String editProduit(Model model, @RequestParam(name = "id") Integer id) {
+        Product product = productManager.getProductById(id);
+        if (product != null) {
+            model.addAttribute("product", product);
+            return "updateproduct";
+        } else {
+            return "error";
+        }
+    }
+
+    @PostMapping("/updatedevis")
+    public String ajouterProductAction(@ModelAttribute("ProductToBeUpdated") Product product) {
+        productManager.UpdateProduct(product);
+        return "redirect:/listeproduit";
     }
 
 }

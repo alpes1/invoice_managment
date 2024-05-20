@@ -14,22 +14,21 @@ import lombok.Setter;
 public class ProductLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id ;
+    private Integer id;
 
-    int quantity ;
+    int quantity;
+
+    double price;
     @ManyToOne
-    private Quotes quotes ;
+    private Quotes quotes;
 
     @ManyToOne
-    private Product product ;
+    private Product product;
     @ManyToOne
-    private Invoice invoice ;
+    private Invoice invoice;
 
-    public double getTotalPrice()
-    {
-        return this.product.getPrice() * this.quantity ;
+    public double getTotalPrice() {
+        return this.price * this.quantity;
     }
-
-
 
 }

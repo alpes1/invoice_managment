@@ -1,86 +1,244 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="template"
->
-<head>
-    <meta charset="UTF-8">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+  <head>
+    <meta charset="UTF-8" />
     <title>Gestion des Produits</title>
-    <link rel="stylesheet"
-          href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css" />
     <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-</head>
-<body>
-<div layout:fragment="content">
-    <div class="card-body">
-        <div class="container" align="center">
-            <form action="/ajouterDevis" method="post">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      var productList = [
+        /*[# th:each="product : ${ListProduit}"]*/
+        {
+          id: '[[${product.getId()}]]',
+          name: '[[${product.getName()}]]',
+          taux_tva: '[[${product.getTaux_tva()}]]',
+          price: '[[${product.getPrice()}]]',
+        },
+        /*[/]*/
+      ];
+      /*]]>*/
+    </script>
+    <script>
+      function recalculateAll() {
+        var sum = 0;
+        for (const r of $('.deletetable_row')) {
+          var row = $(r);
+          sum += row.find('.quantity-lists').val() * row.find('.price-lists').val();
+        }
+        $('#total_price').text(sum);
+      }
+      var counter = 0;
+      function addNewLigneProduit() {
+        counter++;
+
+        var values = $(`.article-lists:not(#hiddenListProduct_${counter})`)
+          .map(function () {
+            return $(this).val();
+          })
+          .get();
+
+        $('#ajouter_ligne_de_produit').append(`
+                  <div class="pt-1 pb-1 col-12 deletetable_row" id="deletetable_row_${counter}">
+                    <div class="row">
+
+                      <div class="col-12 col-md-4">
+                        <select required onchange="disableUsedIdFromOtherLists(this,${counter})" name="product[${counter}]" placeholder="Product" title="Product" class="form-select w-50 article-lists" id="hiddenListProduct_${counter}">
+                          <option value>
+                            --------------
+                          </option>
+                          ${productList.reduce((prev, element) => {
+                            return (
+                              prev +
+                              `
+                                <option value="${element.id}" ${values.includes(element.id) ? 'disabled' : ''}>
+                                  ${element.name}
+                                </option>
+                              `
+                            );
+                          }, '')}
+                        </select>
+                      </div>
+
+
+                      <div class="col-12 col-md-3">
+                        <input required oninput="recalculateAll()" value="0" min="0" placeholder="Quantity" type="number" class="form-control w-50 quantity-lists" id="quantity_${counter}" name="quantity[${counter}]" />
+                      </div>
+
+                      <div class="col-12 col-md-3">
+                        <input required oninput="recalculateAll()" min="0" placeholder="Price" type="number" class="form-control w-50 price-lists" id="price_${counter}" name="price[${counter}]" />
+                      </div>
+
+                      <div class="col-12 col-md-2">
+                        <button type="button" class="btn btn-danger" onclick="deleteProducts(${counter})">
+                          delete
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+              `);
+        recalculateAll();
+      }
+
+      function deleteProducts(index) {
+        $(`.article-lists:not(#hiddenListProduct_${index}) option[value=${$(`#hiddenListProduct_${index}`).val()}]`).prop('disabled', false);
+        $(`#deletetable_row_${index}`).remove();
+        recalculateAll();
+      }
+
+      function disableUsedIdFromOtherLists(select, index) {
+        if ($(select).val()) {
+          for (const prod of productList) {
+            if (prod.id == $(select).val()) {
+              $(`#price_${counter}`).val(prod.price);
+              break;
+            }
+          }
+          $(`.article-lists:not(#hiddenListProduct_${index}) option[value=${$(select).val()}]`).prop('disabled', true);
+          $(select).data('oldval', $(select).val());
+        } else {
+          $(`#price_${counter}`).val('');
+          $(`.article-lists:not(#hiddenListProduct_${index}) option[value=${$(select).data('oldval')}]`).prop('disabled', false);
+        }
+        recalculateAll();
+      }
+
+      function modifyRequest() {
+        // Get the form element
+        var form = $(`#post_ajouterdevis`);
+
+        if (!form[0].reportValidity()) {
+          return false;
+        }
+        // Initialize empty arrays to store product, quantity, and price values
+        var productList = [];
+        var quantityList = [];
+        var priceList = [];
+
+        // Loop through each form field
+        form.find("select[name^='product'], input[name^='quantity'], input[name^='price']").each(function () {
+          try {
+            var fieldName = $(this).attr('name');
+            var fieldValue = $(this).val();
+
+            // Extract the index and value based on field name
+            var index = fieldName.split('[')[1].replace(']', '');
+            var value = fieldValue;
+
+            // Based on the field name prefix, populate the corresponding list
+            switch (fieldName.split('[')[0]) {
+              case 'product':
+                productList.push(value);
+                break;
+              case 'quantity':
+                quantityList.push(value);
+                break;
+              case 'price':
+                priceList.push(value);
+                break;
+            }
+          } catch (error) {
+            //skip
+          }
+        });
+
+        // Join the lists with commas to create the desired format
+        var modifiedProduct = productList.join(',');
+        var modifiedQuantity = quantityList.join(',');
+        var modifiedPrice = priceList.join(',');
+
+        // Modify the form fields (optional, you can directly use these in your AJAX call)
+        form.find("input[name='product']").val(modifiedProduct);
+        form.find("input[name='quantity']").val(modifiedQuantity);
+        form.find("input[name='price']").val(modifiedPrice);
+
+        console.log({
+          quote_Number: $('#quote_Number').val(),
+          quote_Date: $('#quote_Date').val(),
+          customer: $('#customer').val(),
+          product: modifiedProduct,
+          quantity: modifiedQuantity,
+          price: modifiedPrice,
+        });
+        // return false;
+        // You can now submit the form using AJAX or regular submit
+        // Your AJAX call with modified data (example)
+        $.ajax({
+          url: '/ajouterdevis', // Replace with your form action URL
+          type: 'POST',
+          data: {
+            quote_Number: $('#quote_Number').val(),
+            quote_Date: $('#quote_Date').val(),
+            customer: $('#customer').val(),
+            product: modifiedProduct,
+            quantity: modifiedQuantity,
+            price: modifiedPrice,
+          },
+          success: function (response) {
+            window.location.href = '/listedevis';
+          },
+          error: function (error) {
+            // Handle any errors
+          },
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <div class="card-body">
+        <div class="container">
+          <form id="post_ajouterdevis" action="/ajouterdevis" method="post">
+            <div class="row">
+              <input type="hidden" name="product" />
+              <input type="hidden" name="quantity" />
+              <input type="hidden" name="price" />
+
+              <div class="col-12 col-md-6">
                 <div class="mb-3">
-                    <label for="quote_Number" class="form-label">Numéro de devis</label>
-                    <input type="text" class="form-control w-50" id="quote_Number" name="quote_Number">
-                    <span class="text-danger" th:errors="${devis.quote_Number}"></span>
+                  <label for="quote_Number" class="form-label">Numéro de devis</label>
+                  <input type="text" required class="form-control w-50" id="quote_Number" name="quote_Number" />
                 </div>
                 <div class="mb-3">
-                    <label for="quote_Date" class="form-label">Date de devis</label>
-                    <input type="date" class="form-control w-50" id="quote_Date" name="quote_Date">
-                    <span class="text-danger" th:errors="${devis.quote_Date}"></span>
+                  <label for="quote_Date" class="form-label">Date de devis</label>
+                  <input type="date" required class="form-control w-50" id="quote_Date" name="quote_Date" />
                 </div>
 
                 <div class="mb-3">
-                    <label for="totalprice" class="form-label">Quantité</label>
-                    <input type="text" class="form-control w-50" id="totalprice" name="totalprice">
-                    <span class="text-danger" th:errors="${devis.totalprice}"></span>
+                  <label for="customer" class="form-label">Client</label>
+                  <select required class="form-select w-50" id="customer" name="customer">
+                    <option value>---------</option>
+                    <option th:each="client : ${ListOfcustomers}" th:value="${client.getId()}" th:text="${client.getName()}"></option>
+                  </select>
                 </div>
-                <!--                <div class="mb-3">
-                                    <label for="price" class="form-label">Prix</label>
-                                    <input type="text" class="form-control w-50" id="price" name="price">
-                                    <span class="text-danger" th:errors="${devis.invoice}"></span>
-                                </div>-->
+              </div>
+              <div class="col-12 col-md-6">
+                <span id="total_price" class="float-end text-bold"> </span>
+                Total Price devis :
+              </div>
+            </div>
 
-                <!-- Champ Customer -->
-                <div class="mb-3">
-                    <label for="customer" class="form-label">Client</label>
-                    <select class="form-select w-50" id="customer" name="customer">
+            <!-- Champ Quotes -->
+            <div>
+              <button onclick="addNewLigneProduit()" type="button" class="btn btn-primary form-control">Ajouter ligne de produit</button>
+            </div>
 
-                        <option th:each="client : ${ListOfcustomers}" th:value="${client.id}"
-                                th:text="${client.customerName}"></option>
-                    </select>
-                    <span class="text-danger" th:errors="${devis.customer}"></span>
-                </div>
+            <div class="mb-3">
+              <div class="row" id="ajouter_ligne_de_produit"></div>
+            </div>
 
-                <!-- Champ Quotes -->
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary form-control w-50">Ajouter ligne de produit</button>
+            <br />
 
-                </div>
-
-
-                <button type="submit" class="btn btn-primary form-control w-50" value="Ajouter">Ajouter</button>
-            </form>
+            <button type="button" onclick="modifyRequest()" class="btn btn-primary form-control w-50" value="Ajouter">Ajouter</button>
+          </form>
         </div>
-
-
+      </div>
     </div>
-
-</div>
-</div>
-
-<script>
-    `
-    <label htmlFor="product" className="form-label">choose product </label>
-    <select className="form-select w-50" id="hiddenListProduct">
-
-    </select>
-
-    <label htmlFor="quantity" className="form-label"> Quantity </label>
-    <input type="number" className="form-control w-50" id="quantity" th:value="${productLine.quantity}"
-           name="quantity"/>
-           `
-</script>
-</body>
+  </body>
 </html>
-

@@ -14,31 +14,24 @@ import java.util.Date;
 @Setter
 @Getter
 
-
 public class Quotes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id ;
+    private Integer id;
 
     private Integer quote_Number;
 
-    private Date quote_Date ;
+    private Date quote_Date;
 
-    private LocalDate created_at ;
-
-    private LocalDate updated_at ;
-
-    private long totalprice ;
-
+    private long totalprice;
 
     @OneToOne
-    private Invoice invoice ;
+    private Invoice invoice;
 
     @ManyToOne
-    private Customer customer ;
+    private Customer customer;
 
     @OneToMany(mappedBy = "quotes")
-    private Collection<ProductLine> productLines = new ArrayList<>() ;
-
+    private Collection<ProductLine> productLines = new ArrayList<>();
 
 }
