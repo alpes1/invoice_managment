@@ -102,8 +102,9 @@
       }
 
       function deleteProducts(index) {
-        $(`.article-lists:not(#hiddenListProduct_${index}) option[value=${$(`#hiddenListProduct_${index}`).val()}]`).prop('disabled', false);
-        $(`#deletetable_row_${index}`).remove();
+        if($(`#hiddenListProduct_${index}`).val() != "" )
+          $(`.article-lists:not(#hiddenListProduct_${index}) option[value=${$(`#hiddenListProduct_${index}`).val()}]`).prop('disabled', false);
+          $(`#deletetable_row_${index}`).remove();
         recalculateAll();
       }
 

@@ -13,6 +13,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -24,32 +26,26 @@ public class InvoiceManagementApplication implements CommandLineRunner {
     }
 
     @Autowired
-    QuotesManager quotesManager;
-    @Autowired
-    ProductLineManager productLineManager;
-    @Autowired
     EntrepriseManager  entrepriseManager ;
 
     @Override
     public void run(String... args) throws Exception {
 
-        // List<Quotes> quotes = quotesManager.getAllQuotes();
-        // List<ProductLine> productLines =productLineManager.getAllProductLines();
-        // ProductLine p=productLines.get(0) ;
-        // System.out.println(p.getTotalPrice());
-        // Quotes q = quotes.get(0);
-        // System.out.println(q.getId());
-        // System.out.println(productLineManager.sumProductLinesByQuotes(4));
-        // System.out.println();
-        //System.out.println(productLineManager.sumAllProductLines());
-   /*     Entreprise entreprise = new Entreprise();
+
+        Entreprise entreprise = new Entreprise();
+
         entreprise.setName("D&E");
         entreprise.setCapital("100000");
         entreprise.setLogo("/images/company.jpeg");
         entreprise.setIce("5656464");
-        entreprise.setDate_Creation(new Date("2019-11-15"));
+        Date date = Date.from((LocalDate.of(2019, 11, 15)).atStartOfDay(ZoneId.systemDefault()).toInstant());
         entreprise.setPatent("156164598");
+        entreprise.setPhoneNumber("0634569778");
+        entreprise.setRc("62651651");
+        entreprise.setIdentifiant_fiscale("1a5");
 
-*/
+        entrepriseManager.addEntreprise(entreprise);
+
+
     }
 }

@@ -3,6 +3,8 @@ package ma.pfa.invoicemanagement.web;
 import java.util.Date;
 import java.util.List;
 
+import ma.pfa.invoicemanagement.dao.entities.*;
+import ma.pfa.invoicemanagement.metier.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,15 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import ma.pfa.invoicemanagement.dao.entities.Customer;
-import ma.pfa.invoicemanagement.dao.entities.Product;
-import ma.pfa.invoicemanagement.dao.entities.ProductLine;
-import ma.pfa.invoicemanagement.dao.entities.Quotes;
-import ma.pfa.invoicemanagement.metier.CustomerManager;
-import ma.pfa.invoicemanagement.metier.ProductLineManager;
-import ma.pfa.invoicemanagement.metier.ProductManager;
-import ma.pfa.invoicemanagement.metier.QuotesManager;
 
 @Controller
 public class QuoteController {
@@ -33,6 +26,8 @@ public class QuoteController {
     CustomerManager customerManager;
     @Autowired
     ProductLineManager productLineManager;
+    @Autowired
+    EntrepriseManager entrepriseManager;
 
     // Crud Actions
 
@@ -128,4 +123,19 @@ public class QuoteController {
         return "redirect:/listedevis";
     }
 
+    @GetMapping("/impressiondevis")
+    public String impressiondevis(Model model, @RequestParam(name = "id") Integer id) {
+        Quotes devis = quotesManager.getQuotesById(id);
+        Entreprise entreprise = entrepriseManager.getFirst();
+
+
+        if (devis != null) {
+
+            model.addAttribute("enterprise", entreprise);
+            model.addAttribute("devis" , devis) ;
+            return "impressionDevis";
+        } else {
+            return "error";
+        }
+    }
 }

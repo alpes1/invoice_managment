@@ -10,4 +10,8 @@ public interface EntrepriseManager {
 
     public Entreprise getEntrepriseById(Integer id);
 
+    public Entreprise addEntreprise(Entreprise e);
+
+    public Entreprise getFirst() ;
+
 }

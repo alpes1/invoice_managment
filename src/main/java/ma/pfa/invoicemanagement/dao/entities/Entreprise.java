@@ -16,20 +16,25 @@ import java.util.Date;
 public class Entreprise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id ;
+    private Integer id ;
 
-    String name ;
+    private String name ;
 
-    String Logo ;
+    private String logo ;
 
-    String Ice ;
+    private String ice ;
 
-    Date date_Creation ;
+    private Date date_Creation ;
 
-    String Patent ;
+    private String patent ;
 
-    String Capital ;
+    private String capital ;
 
+    private String phoneNumber ;
+
+    private String rc ;
+
+    private String identifiant_fiscale ;
 
 
 }

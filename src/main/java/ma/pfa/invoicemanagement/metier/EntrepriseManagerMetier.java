@@ -16,4 +16,14 @@ public class EntrepriseManagerMetier implements EntrepriseManager{
     public Entreprise getEntrepriseById(Integer id) {
         return entrepriseRepository.findEntrepriseById(id) ;
     }
+
+    @Override
+    public Entreprise addEntreprise(Entreprise e) {
+        return entrepriseRepository.save(e);
+    }
+
+    @Override
+    public Entreprise getFirst() {
+        return entrepriseRepository.findAll().get(0);
+    }
 }
