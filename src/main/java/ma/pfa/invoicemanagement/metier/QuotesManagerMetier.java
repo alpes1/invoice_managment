@@ -25,10 +25,10 @@ public class QuotesManagerMetier implements QuotesManager{
         return quotesRepository.findAll() ;
     };
 
-    public Quotes updateQuotes(int id )
+    public Quotes updateQuotes(Quotes quotes )
     {
 
-        return null ;
+        return quotesRepository.save(quotes) ;
     };
     public Boolean deleteQuotes(int id )
     {
@@ -77,6 +77,12 @@ public class QuotesManagerMetier implements QuotesManager{
     @Override
     public Double getTotalPrice() {
         return null;
+    }
+
+    @Override
+    public Double getTotalPriceByYearAndMonth(int currentYear, int month) {
+        return quotesRepository.findTotalPriceByYearAndMonth(currentYear,month);
+
     }
 
 

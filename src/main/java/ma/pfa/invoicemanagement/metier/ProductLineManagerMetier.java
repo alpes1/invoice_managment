@@ -51,7 +51,7 @@ public class ProductLineManagerMetier implements ProductLineManager{
                 .mapToDouble(ProductLine::getTotalPrice)
                 .sum();
 
-        return null;
+        return sum;
     }
 
 

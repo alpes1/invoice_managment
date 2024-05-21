@@ -29,21 +29,6 @@ public class InvoiceController {
     @Autowired
     QuotesManager quotesManager;
 
-    @GetMapping("/dashboard")
-    public String dash(Model model) {
-
-        List<Invoice> invoices = invoiceManager.getAllInvoice();
-        /*
-         * BigDecimal totalPrix = new BigDecimal(invoices.stream()
-         * .mapToDouble(Invoice::)
-         * .sum());
-         * 
-         * model.addAttribute("CA" , totalPrix);
-         */
-
-        model.addAttribute("totalInvoices", invoices.size());
-        return "Dashboard";
-    }
 
     @GetMapping("/index")
     public String ListInvoice(Model model,

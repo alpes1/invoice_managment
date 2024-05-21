@@ -39,15 +39,19 @@ public class QuoteController {
     @GetMapping("/listedevis")
     public String ListProducts(Model model,
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "taille", defaultValue = "2") int taille) {
+            @RequestParam(name = "taille", defaultValue = "10") int taille) {
 
         Page<Quotes> devis = quotesManager.getAllQuotes(page, taille);
 
+
         model.addAttribute("ListDevis", devis);
+        model.addAttribute("ListProductLines", productLineManager);
+
         model.addAttribute("page", page);
         model.addAttribute("taille", taille);
         return "listeDevis";
     }
+
 
     @GetMapping("/ajouterdevis")
     public String ajouterDevisGet(Model model) {
@@ -81,18 +85,20 @@ public class QuoteController {
         quotes.setCustomer(cs);
 
         Quotes createdQuotes = quotesManager.addQuotes(quotes);
-
+        long  totalprice = 0 ;
         int numberOfProductLines = products.size();
         for (int i = 0; i < numberOfProductLines; i++) {
+            Product product = productManager.getProductById(products.get(i)) ;
+            totalprice += prices.get(i) * quantities.get(i) * ( (product.getTaux_tva()/100) + 1 );
             ProductLine productLine = new ProductLine();
-            productLine.setProduct(productManager.getProductById(products.get(i)));
+            productLine.setProduct(product);
             productLine.setQuotes(createdQuotes);
             productLine.setQuantity(quantities.get(i));
             productLine.setPrice(prices.get(i));
-
             productLineManager.addProductLine(productLine);
         }
-
+        quotes.setTotalprice(totalprice);
+        quotesManager.updateQuotes(quotes);
         return "redirect:/listedevis";
     }
 
@@ -107,19 +113,19 @@ public class QuoteController {
 
     @GetMapping("/editdevis")
     public String editProduit(Model model, @RequestParam(name = "id") Integer id) {
-        Product product = productManager.getProductById(id);
-        if (product != null) {
-            model.addAttribute("product", product);
-            return "updateproduct";
+       Quotes quotes = quotesManager.getQuotesById(id);
+        if (quotes != null) {
+            model.addAttribute("quotes",quotes);
+            return "updateDevis";
         } else {
             return "error";
         }
     }
 
     @PostMapping("/updatedevis")
-    public String ajouterProductAction(@ModelAttribute("ProductToBeUpdated") Product product) {
-        productManager.UpdateProduct(product);
-        return "redirect:/listeproduit";
+    public String ajouterProductAction(@ModelAttribute("QuotesToBeUpdated") Quotes quotes) {
+        quotesManager.updateQuotes(quotes);
+        return "redirect:/listedevis";
     }
 
 }

@@ -26,15 +26,30 @@
     </script>
     <script>
       function recalculateAll() {
-        var sum = 0;
+        var sum_HT = 0;
+        var sum_TTC = 0;
         for (const r of $('.deletetable_row')) {
+          var taux_tva = 0 ;
           var row = $(r);
-          sum += row.find('.quantity-lists').val() * row.find('.price-lists').val();
+          for (var article of  productList) {
+            if (row.find('.article-lists').val() == article.id) {
+              taux_tva = article.taux_tva;
+              break ;
+            }
+          }
+          sum_HT += row.find('.quantity-lists').val() * row.find('.price-lists').val();
+          sum_TTC += row.find('.quantity-lists').val() * row.find('.price-lists').val() *(1+ taux_tva / 100);
         }
-        $('#total_price').text(sum);
+        $('#total_price_HT').text(sum_HT);
+        $('#total_price_TTC').text(sum_TTC);
       }
       var counter = 0;
       function addNewLigneProduit() {
+        if(!($(".deletetable_row").length < productList.length  )) {
+          alert("Le nombre des produits est insuffisant !!") ;
+           return ;
+        };
+
         counter++;
 
         var values = $(`.article-lists:not(#hiddenListProduct_${counter})`)
@@ -96,14 +111,14 @@
         if ($(select).val()) {
           for (const prod of productList) {
             if (prod.id == $(select).val()) {
-              $(`#price_${counter}`).val(prod.price);
+              $(`#price_${index}`).val(prod.price);
               break;
             }
           }
           $(`.article-lists:not(#hiddenListProduct_${index}) option[value=${$(select).val()}]`).prop('disabled', true);
           $(select).data('oldval', $(select).val());
         } else {
-          $(`#price_${counter}`).val('');
+          $(`#price_${index}`).val('');
           $(`.article-lists:not(#hiddenListProduct_${index}) option[value=${$(select).data('oldval')}]`).prop('disabled', false);
         }
         recalculateAll();
@@ -219,8 +234,11 @@
                 </div>
               </div>
               <div class="col-12 col-md-6">
-                <span id="total_price" class="float-end text-bold"> </span>
-                Total Price devis :
+                <span id="total_price_HT" class="float-end text-bold"> </span>
+                Total Price devis HT:
+                <br>
+                <span id="total_price_TTC" class="float-end text-bold"> </span>
+                Total Price devis TTC :
               </div>
             </div>
 

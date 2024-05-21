@@ -12,15 +12,6 @@ import java.util.List;
 @Controller
 public class ProductLineController  {
 
-    @Autowired
-    ProductLineManager productLineManager ;
-    @GetMapping("/totalvente")
-    public String  totalsells(Model model )
-    {
-        double sum = productLineManager.sumAllProductLines() ;
-        model.addAttribute("totalsells" ,sum) ;
-        return "/Dashboard";
 
-    }
 
 }

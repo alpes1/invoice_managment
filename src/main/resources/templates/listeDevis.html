@@ -22,7 +22,7 @@
               </form>
             </div>
             <div class="container">
-              <table class="table">
+              <!--<table class="table">
                 <thead>
                   <tr>
                     <th>Quote Id</th>
@@ -35,13 +35,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="p:${listedevis}">
+                  <tr th:each="p:${ListDevis}">
                     <td th:text="${p.getId()}"></td>
                     <td th:text="${p.getQuote_Number()}"></td>
-                    <td th:text="${p.getGuote_Date()}"></td>
+                    <td th:text="${p.getQuote_Date()}"></td>
                     <td th:text="${p.getTotalprice()}"></td>
                     <td th:text="${p.getCustomer().getName()}"></td>
-                    <td th:text="${p.getInvoice()?p.getInvoice().getInvoiceNumber():'Convert into facutre'}"></td>
+                    <td th:text="${p.getCustomer().getName()}"></td>
+                    <td th:text="${ListProductLines.sumProductLinesByQuotes(p.getId())}"></td>
+                    &lt;!&ndash;<td th:text="${p.getInvoice()?p.getInvoice().getInvoiceNumber():'Convert into facutre'}"></td>&ndash;&gt;
                     <td>
                       <a th:href="@{editdevis(id=${p.getId()})}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -58,6 +60,156 @@
                       </a>
                     </td>
                   </tr>
+                </tbody>
+              </table>-->
+              <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" class="p-4">
+                    <div class="flex items-center">
+                      <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="checkbox-all-search" class="sr-only">checkbox</label>
+                    </div>
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Numero Devis
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Date Devis
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    CLient
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Nombre de Produit
+                  </th>  <th scope="col" class="px-6 py-3">
+                  Total du Devis
+                </th>  <th scope="col" class="px-6 py-3">
+                  Action
+
+                </tr>
+                </thead>
+                <tbody>
+                <tbody>
+                <tr th:each="p:${ListDevis}">
+                  <td class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+
+                  <td scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+
+                    <div class="ps-3">
+
+                      <div class="font-normal text-gray-500" th:text="${p.getId()}"></div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    React Developer
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
+                  </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+
+
+                    <div class="ps-3">
+
+                      <div class="font-normal text-gray-500"></div>
+                    </div>
+                  </th>
+                  <td class="px-6 py-4">
+                    Designer
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
+                  </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <td class="w-4 p-4">
+                    <div class="flex items-center">
+                      <input id="checkbox-table-search-2" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="checkbox-table-search-2" class="sr-only">checkbox</label>
+                    </div>
+                  </td>
+                  <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+
+                    <div class="ps-3">
+                      <div class="text-base font-semibold">Jese Leos</div>
+                      <div class="font-normal text-gray-500">jese@flowbite.com</div>
+                    </div>
+                  </th>
+                  <td class="px-6 py-4">
+                    Vue JS Developer
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
+                  </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <td class="w-4 p-4">
+                    <div class="flex items-center">
+                      <input id="checkbox-table-search-2" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="checkbox-table-search-2" class="sr-only">checkbox</label>
+                    </div>
+                  </td>
+                  <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+
+                    <div class="ps-3">
+                      <div class="text-base font-semibold">Thomas Lean</div>
+                      <div class="font-normal text-gray-500">thomes@flowbite.com</div>
+                    </div>
+                  </th>
+                  <td class="px-6 py-4">
+                    UI/UX Engineer
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
+                  </td>
+                </tr>
+                <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <td class="w-4 p-4">
+                    <div class="flex items-center">
+                      <input id="checkbox-table-search-3" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="checkbox-table-search-3" class="sr-only">checkbox</label>
+                    </div>
+                  </td>
+                  <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <div class="ps-3">
+                      <div class="text-base font-semibold">Leslie Livingston</div>
+                      <div class="font-normal text-gray-500">leslie@flowbite.com</div>
+                    </div>
+                  </th>
+                  <td class="px-6 py-4">
+                    SEO Specialist
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div> Offline
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
+                  </td>
+                </tr>
                 </tbody>
               </table>
               <div class="container">

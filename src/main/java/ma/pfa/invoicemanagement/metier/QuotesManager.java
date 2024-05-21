@@ -13,7 +13,7 @@ public interface QuotesManager {
 
     public List<Quotes> getAllQuotes();
 
-    public Quotes updateQuotes(int id ) ;
+    public Quotes updateQuotes(Quotes quotes) ;
     public Boolean deleteQuotes(int id ) ;
 
     //pagination
@@ -31,6 +31,8 @@ public interface QuotesManager {
     public List<Quotes> getAllQuotesList() ;
 
     public Double getTotalPrice();
+
+    Double getTotalPriceByYearAndMonth(int currentYear, int month) ;
 
 
 

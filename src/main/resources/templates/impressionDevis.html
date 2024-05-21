@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="template"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Imprimer Devis</title>
+    <link rel="stylesheet"
+          href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-6 "><img src="companylogo.jpeg" alt=""></div>
+        <div class="col-6" th:text="devis.getNumero"> </div>
+
+        <div class="col-6" >
+            <h1>Devis</h1> <br>
+            <h3 th:text="${entreprise.getName()}"> </h3>
+        </div>
+        <div class="col-6" th:text="${entreprise.getName()}"> </div>
+        <div class="col-6" th:text="${entreprise.getName()}"> </div>
+        <div class="col-6" th:text="${entreprise.getName()}"> </div>
+        <div class="col-6" th:text="${entreprise.getName()}"> </div>
+
+    </div>
+
+
+</div>
+</body>
+</html>
