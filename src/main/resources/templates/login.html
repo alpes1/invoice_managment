@@ -8,17 +8,28 @@
   <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
   <script src="webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .formbold-img{
+      height:100px
+    }
+    .flex {
+      display: flex;
+      align-content: space-around;
+      flex-wrap: wrap;
+      flex-direction: column;
+    }
+  </style>
 </head>
 <body>
 
-<form action="/login" method="get">
+<form action="/login" method="post">
   <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm flex justify-content-center">
+      <img src="/images/invoice.png" class="formbold-img ">
+      <h1 class="text-center text-bold h1 text-xl">Ma.Facture</h1>
     </div>
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="/login" method="POST">
+      <form class="space-y-6" action="#" method="POST">
         <div>
           <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
           <div class="mt-2">

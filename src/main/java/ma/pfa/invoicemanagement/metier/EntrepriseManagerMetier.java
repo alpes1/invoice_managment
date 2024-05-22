@@ -26,4 +26,9 @@ public class EntrepriseManagerMetier implements EntrepriseManager{
     public Entreprise getFirst() {
         return entrepriseRepository.findAll().get(0);
     }
+
+    @Override
+    public Entreprise getEntrepriseByUsername(String username) {
+        return  entrepriseRepository.findByUsername(username);
+    }
 }

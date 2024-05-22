@@ -13,5 +13,6 @@ public interface EntrepriseManager {
     public Entreprise addEntreprise(Entreprise e);
 
     public Entreprise getFirst() ;
+    public Entreprise getEntrepriseByUsername(String username) ;
 
 }

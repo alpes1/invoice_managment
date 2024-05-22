@@ -1,73 +1,122 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org"
-
->
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Imprimer Devis</title>
-    <link rel="stylesheet"
-          href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css" />
     <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/5.3.3/js/bootstrap.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .costom-size-image {
+            max-width: 200px;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+        }
+        @media print {
+            body,
+            html {
+                height: 100%;
+                margin: 0;
+            }
+            .container {
+                display: flex;
+                flex-direction: column;
+                min-height: 100%;
+            }
+            .card-footer {
+                margin-top: auto;
+                page-break-after: always;
+            }
+            .card-footer:last-child {
+                page-break-after: auto;
+            }
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-6 "><img th:src="${enterprise.getLogo()}" alt=""></div>
-        <div class="col-6" th:text="${devis.getQuote_Number()}"></div>
-
         <div class="col-6">
-            <h1>Devis</h1> <br>
-            <h3 th:text="${enterprise.getName()}"></h3>
+            <img th:src="${enterprise.getLogo()}" class="costom-size-image" />
         </div>
-        <div class="col-6" th:text="${devis.getQuote_Number()}"></div>
-        <div class="col-6" th:text="${devis.getQuote_Date()}"></div>
-        <div class="col-6" th:text="${devis.getCustomer().getName()}"></div>
-        <div class="col-6" th:text="${devis.getCustomer().getAddress()}"></div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <span class="h1">Devis <span th:text="${devis.getQuote_Number()}"></span></span>
+                </div>
+                <div class="col-12">&nbsp;</div>
+                <div class="col-12">
+                    <span class="h3 text-bold" th:text="${enterprise.getName()}"></span>
+                    <br />
+                    <i class="" th:text="${devis.getQuote_Date()}"></i>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>
+                                <span class="" th:text="${devis.getCustomer().getName()}"></span>
+                                <br />
+                                <span class="" th:text="${devis.getCustomer().getAddress()}"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <div class="col-12">
-
             <table class="table">
                 <thead>
                 <tr>
-
                     <th>Nom du produit</th>
                     <th>Prix Unitaire</th>
                     <th>Quantite</th>
                     <th>Prix HT</th>
                     <th>Prix TTC</th>
-                    <th colspan="2">Action</th>
                 </tr>
                 </thead>
                 <tbody>
+                <tr th:if="${#lists.isEmpty(devis.getProductLines())}">
+                    <td colspan="7" class="text-center">Devis sans articles</td>
+                </tr>
                 <tr th:each="p:${devis.getProductLines()}">
                     <td th:text="${p.getProduct().getName()}"></td>
                     <td th:text="${p.getPrice()}"></td>
                     <td th:text="${p.getQuantity()}"></td>
                     <td th:text="${p.getTotalPrice()}"></td>
                     <td th:text="${(1+(p.getProduct().getTaux_tva()/100)) * p.getTotalPrice() }"></td>
-
-
                 </tr>
                 </tbody>
             </table>
-
+        </div>
+        <div class="col-9"></div>
+        <div class="col-3">
+            <table class="table table-sm table-dark">
+                <tr>
+                    <td>Total TTC :</td>
+                    <td th:text="${devis.getTotalprice()}"></td>
+                </tr>
+            </table>
         </div>
     </div>
 
-
-    <div class="card-footer" align="center">&copy;
+    <div class="card-footer">
+        &copy; Ice :
         <span class="text-bold" th:text="${enterprise.getIce()}"></span>
+        Tel :
         <span class="text-info" th:text="${enterprise.getPhoneNumber()}"></span>
+        Capital :
         <span class="text-bold" th:text="${enterprise.getCapital()}"></span>
+        If :
         <span class="text-bold" th:text="${enterprise.getIdentifiant_fiscale()}"></span>
+        Rc :
         <span class="text-bold" th:text="${enterprise.getRc()}"></span>
     </div>
 </div>
 <script>
-    window.onload = function() { window.print(); }
+    window.onload = function () {
+        window.print();
+    };
 </script>
 </body>
 </html>

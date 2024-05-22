@@ -36,5 +36,10 @@ public class Entreprise {
 
     private String identifiant_fiscale ;
 
+    private String password;
+
+    private String username;
+
+
 
 }

@@ -233,14 +233,15 @@
                     <option th:each="client : ${ListOfcustomers}" th:value="${client.getId()}" th:text="${client.getName()}"></option>
                   </select>
                 </div>
+                <div class="mb-5">
+                  <span id="total_price_HT" class="float-end text-bold"> </span>
+                  Total Price devis HT:
+                  <br>
+                  <span id="total_price_TTC" class="float-end text-bold"> </span>
+                  Total Price devis TTC :
+                </div>
               </div>
-              <div class="col-12 col-md-6">
-                <span id="total_price_HT" class="float-end text-bold"> </span>
-                Total Price devis HT:
-                <br>
-                <span id="total_price_TTC" class="float-end text-bold"> </span>
-                Total Price devis TTC :
-              </div>
+
             </div>
 
             <!-- Champ Quotes -->

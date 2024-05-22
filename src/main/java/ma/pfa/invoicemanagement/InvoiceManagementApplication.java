@@ -25,27 +25,12 @@ public class InvoiceManagementApplication implements CommandLineRunner {
         SpringApplication.run(InvoiceManagementApplication.class, args);
     }
 
-    @Autowired
-    EntrepriseManager  entrepriseManager ;
 
     @Override
     public void run(String... args) throws Exception {
 
 
-        Entreprise entreprise = new Entreprise();
-
-        entreprise.setName("D&E");
-        entreprise.setCapital("100000");
-        entreprise.setLogo("/images/company.jpeg");
-        entreprise.setIce("5656464");
-        Date date = Date.from((LocalDate.of(2019, 11, 15)).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        entreprise.setPatent("156164598");
-        entreprise.setPhoneNumber("0634569778");
-        entreprise.setRc("62651651");
-        entreprise.setIdentifiant_fiscale("1a5");
-
-        entrepriseManager.addEntreprise(entreprise);
 
 
-    }
-}
+
+}}
