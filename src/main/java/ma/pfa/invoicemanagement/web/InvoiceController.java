@@ -45,7 +45,7 @@ public class InvoiceController {
         model.addAttribute("page", page);
         model.addAttribute("pages", pages);
 
-        return "index";
+        return "Index";
     }
 
     @GetMapping("/ajouterFacture")
@@ -155,7 +155,7 @@ public class InvoiceController {
                 devis.setInvoice(invoice);
                 quotesManager.updateQuotes(devis) ;
             }
-            return "redirect:/listeinvoice";
+            return "redirect:/";
         } else {
             return "error";
         }
