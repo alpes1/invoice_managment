@@ -41,5 +41,4 @@ public class Entreprise {
     private String username;
 
 
-
 }

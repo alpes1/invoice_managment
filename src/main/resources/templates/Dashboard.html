@@ -38,7 +38,7 @@
                             <div>
                                 <p class="card-text text-gray-500 dark:text-gray-400">Chiffre d'affaire</p>
                             </div>
-                            <div class="d-flex align-items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center" th:text="${totalsells}">
+                            <div class="d-flex align-items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center" th:text="${totalsells + ' MAD'}">
                                 <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
                                 </svg>
@@ -55,9 +55,9 @@
                     <div class="max-w-sm w-full rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 hover:cursor-pointer">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <p class="card-text text-gray-500 dark:text-gray-400">Nombre Produit</p>
+                                <p class="card-text text-gray-500 dark:text-gray-400">Nombre Produits vendus</p>
                             </div>
-                            <div class="d-flex align-items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center" th:text="${totalsells}">
+                            <div class="d-flex align-items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center" th:text="${produitVendus}">
                                 <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
                                 </svg>

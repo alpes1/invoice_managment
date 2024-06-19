@@ -16,7 +16,7 @@
             <div class="card-header">Liste de produits | <a th:href="@{listedevis}">Ajouter Produit</a></div>
             <div class="card-body">
                 <div class="d-flex justify-content-center">
-                    <form method="get" th:action="@{/index}">
+                    <form method="get" th:action="@{index}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -40,10 +40,8 @@
                         <tr th:each="i:${ListInvoices}">
                             <td th:text="${i.getInvoiceNumber()}"></td>
                             <td th:text="${i.getInvoiceDate()}"></td>
-                            <td th:text="${i.getDesignation()}"></td>
-                            <td th:text="${i.getQte()}"></td>
-                            <td th:text="${i.getPrice()}"></td>
-                            <td th:text="${i.getTotalPrice()}"></td>
+                            <td th:text="${i.getQuotes().getTotalprice()}"></td>
+
                             </td>
                             <td><a th:href="@{editInvoice(id=${i.getId()})}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green"

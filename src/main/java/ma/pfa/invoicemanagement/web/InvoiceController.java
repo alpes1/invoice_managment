@@ -160,6 +160,10 @@ public class InvoiceController {
             return "error";
         }
     }
+        @GetMapping("")
+        public String afficher(){
+        return "login";
+        }
 
 
 }

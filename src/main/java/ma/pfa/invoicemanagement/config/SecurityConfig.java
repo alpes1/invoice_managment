@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/impressiondevis","/updatedevis","/editdevis", "/deletedevis", "/ajouterdevis", "/listedevis", "/updateproduct", "/editproduit" ,"/deleteProduit" ,"/ajouterproduit" ,"/listeproduit" ,"/generateInvoiceFromQuotes" ,"/deleteInvoice" ,"/editInvoice" ,"/ajouter", "/ajouterFacture" ,"/index" ,"/dashboard" ,"/ajouterclient" ,"/listeclient").authenticated()
-                        .requestMatchers( "/register","/login","/rregister","/images/invoice.png","/webjars/**").permitAll())
+                        .requestMatchers( "/","/register","/login","/rregister","/images/invoice.png","/images/company.jpeg","/public/","/webjars/**").permitAll())
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/dashboard", true)

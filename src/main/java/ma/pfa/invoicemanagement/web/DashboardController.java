@@ -45,6 +45,7 @@ public class DashboardController {
             listSells.add(totalPrice);
         }
 
+
         model.addAttribute("totalsells" ,sum) ;
         List<Quotes> quotes = quotesManager.getAllQuotes();
 
@@ -56,18 +57,23 @@ public class DashboardController {
         List<String> product_name = new ArrayList<>() ;
         List<Double> product_sold = new ArrayList<>() ;
 
+        int soldP =0 ;
         for(Product p : products)
         {
             product_name.add(p.getName());
             double sold =0 ;
+
             for(ProductLine pl : p.getProductLines() )
             {
-                sold+=pl.getQuantity();
+                if(pl.getQuotes().getInvoice() != null)
+                    sold+=pl.getQuantity();
+                    soldP+=pl.getQuantity();
+
             }
             product_sold.add(sold);
         }
         model.addAttribute("product_sold" , product_sold) ;
-
+        model.addAttribute("produitVendus" , soldP) ;
         model.addAttribute("product_name" , product_name) ;
 
 

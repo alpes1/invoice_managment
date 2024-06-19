@@ -22,7 +22,7 @@ public class ProductController {
     @GetMapping("/listeproduit")
     public String ListProducts(Model model,
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "taille", defaultValue = "2") int taille) {
+            @RequestParam(name = "taille", defaultValue = "15") int taille) {
         Page<Product> products = productManager.getAllProduct(page, taille);
         model.addAttribute("ListProduct", products);
         model.addAttribute("page", page);
